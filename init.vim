@@ -55,7 +55,7 @@ let g:tmuxline_preset = {
     \'a': '#S',
     \'win': ['#I', '#W'],
     \'cwin': ['#I', '#W#F'],
-    \'y': ["%F", "%I:%M %p"],
+    \'y': ["%F", "%H:%M"],
     \'z': ['#h'],
     \'options': {
         \'status-justify': 'left'
