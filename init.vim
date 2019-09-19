@@ -10,21 +10,15 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
-Plug 'jeetsukumaran/vim-markology'
 Plug 'sheerun/vim-polyglot'
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'
-Plug 'fisadev/vim-isort'
 Plug 'benmills/vimux'
 Plug 'ayu-theme/ayu-vim'
 Plug 'tmhedberg/SimplyFold'
 Plug 'Konfekt/FastFold'
-Plug 'SirVer/ultisnips'
 Plug 'rhysd/committia.vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'edkolev/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
 "Plug 'prettier/vim-prettier', {'do': npm install'}
 Plug 'airblade/vim-gitgutter'
@@ -48,6 +42,7 @@ set nowrap
 hi! Whitespace guifg=#b2b2b2
 hi! Folded guifg=#00b3b3
 set termguicolors
+filetype plugin on  " Allow filetype plugins to be enabled
 
 """ Plugin Settings
 """" Tmuxline
@@ -62,37 +57,24 @@ let g:tmuxline_preset = {
         \}}
 let g:tmuxline_theme = 'powerline'
 
-"""" Markology
-" Keep markology from showing, to allow ale to show lint errors
-let g:markology_enable = 0
-
 """" YouCompleteMe
 let g:ycm_python_binary_path = '/usr/bin/python'
 let g:loaded_python3_provider = 1
 set completeopt-=preview
 let g:ycm_add_preview_to_completeopt = 0
 
-"""" Ultisnips
-let g:UltiSnipsExpandTrigger = "<c-j>"
-let g:UltiSnipsJumpForwardTrigger = "<M-n>"
-let g:UltiSnipsJumpBackwardTrigger = "<M-p>"
-let g:UltiSnipsSnippetsDir = $HOME."/.config/nvim/UltiSnips"
-let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/UltiSnips']
-let g:UltiSnipsEnableSnipMate = 0
-
 """" vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extension#ale#enabled = 1
+let g:airline_powerline_fonts = 1
 let g:airline_them = 'wombat'
 let g:airline#extensions#tmuxline#enabled = 0
 
 " +-----------------------------------------------------------------------------+
 " | A | B |                     C                            X | Y | Z |   [...]| 
 " +-----------------------------------------------------------------------------+
-let g:airline_section_x = ""
 let g:airline_section_y = ""
-let g:airline_section_z = ""
 set noshowmode
 
 """" indentLine
@@ -135,11 +117,6 @@ let g:EasyMotion_smartcase = 1
 """" EasyOperator
 let g:EasyOperator_line_do_mapping = 0
 
-"""" NERDCommenter
-let g:NERDCreateDefaultMappings = 0
-let g:NERDCommentEmptyLines = 1
-let g:NERDDefaultAlign = 'left'
-filetype plugin on  " Allow filetype plugins to be enabled
 
 """" WhichKey
 let g:which_key_map = {}
