@@ -2,7 +2,7 @@
 
 """" Plugin Installation
 call plug#begin('~/.config/nvim/plugged')
-
+"
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
@@ -11,15 +11,17 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
+Plug 'tomtom/tcomment_vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'
 Plug 'benmills/vimux'
 Plug 'ayu-theme/ayu-vim'
-Plug 'tmhedberg/SimplyFold'
+Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 Plug 'rhysd/committia.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'edkolev/tmuxline.vim'
+Plug 'edkolev/promptline.vim'
 "Plug 'prettier/vim-prettier', {'do': npm install'}
 Plug 'airblade/vim-gitgutter'
 Plug 'haya14busa/vim-easyoperator-line'
@@ -70,15 +72,22 @@ let g:airline#extension#ale#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_them = 'wombat'
 let g:airline#extensions#tmuxline#enabled = 0
-
-" +-----------------------------------------------------------------------------+
-" | A | B |                     C                            X | Y | Z |   [...]| 
-" +-----------------------------------------------------------------------------+
-let g:airline_section_y = ""
+let g:airline_section_x = '' 
+let g:airline_section_y = '%{getcwd()}' 
 set noshowmode
+" comment out the below section if you don't have a patched font installed (eg a nerd font)
+"if !exists('g:airline_symbols')
+"    let g:airline_symbols = {}
+"endif
+"let g:airline_symbols.branch = '\ue725'
+"let g:airline_symbols.dirty = '\ue702'
+"let g:airline_left_sep = '\ue0b8'
+"let g:airline_left_alt_sep = '\ue0b9'
 
-"""" indentLine
-let g:indentLine_char = '┊'
+""" indentLine
+"let g:indentLine_char = '┊'
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " This will indent using a diff char per level
+let g:indentLine_color_gui = '#4c4c4b'  " Ensure the indent char is gray
 
 """" auto-pairs
 let g:AutoPairsCenterLine = 0
@@ -136,14 +145,6 @@ colorscheme ayu
 "set background=dark
 "colorscheme palenight
 
-"""" Macros
-" Macro to enclose the entire line in quotes and add a comma to the end and
-" move down one line
-let @z="$S'A,^j"
-
-" Macro to remove contents of line but leave empty line (for removing whitespace)
-let @c='0$d'
-
 """ Key Bindings
 """" Change leader to space key (KEEP THIS ABOVE OTHER LEADER MAPPINGS)
 " This has to be higher in the file than any <Leader> mappings, since it resets any leader mappings
@@ -153,13 +154,13 @@ let mapleader = ' '
 """" WhichKey
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
+let g:which_key_map.d = 'which_key_ignore'
 
 """" Split Navigation
 nnoremap <C-j> <C-W><down>
 nnoremap <C-k> <C-W><up>
 nnoremap <C-l> <C-W><right>
 nnoremap <bs> <C-W><left>
-"map <Leader> <Plug>(easymotion-prefix)
 
 """" Linting
 let g:which_key_map.a = {
@@ -169,6 +170,43 @@ let g:which_key_map.a = {
     \'t': [':ALEToggle', 'Toggle ALE']
     \}
 
+"""" Buffers
+let g:which_key_map.b = {
+    \'name': '+buffers',
+    \'p': [':bp', 'previous'],
+    \'n': [':bn', 'next'],
+    \'k': [':bufdo bd', 'kill all'],
+    \'d': [':bd', 'kill current'],
+    \'c': [':bp \| bd #', 'kill keep split'],
+    \}
+
+"""" Commenting 
+let g:which_key_map.c = {
+    \'name': '+commenting',
+    \'t': [':TComment', 'toggle-comment'],
+    \'b': [":'<,'>TCommentBlock", 'comment block']
+    \}
+
+"""" Git
+let g:which_key_map.g = {
+    \'name': '+git',
+    \'b': [':Gblame', 'blame'],
+    \'p': [':GitGutterPrevHunk', 'previous hunk'],
+    \'n': [':GitGutterNextHunk', 'next hunk'],
+    \'d': [':GitGutterUndoHunk', 'delete hunk'],
+    \'h': [':call VimuxRunCommandInDir("clear; git_author", 1)', 'history'],
+    \}
+
+"""" Highlighting
+let g:which_key_map.h = [':noh', 'no highlights']
+
+"""" Line 
+let g:which_key_map.l = {
+    \'name': '+easyop-line',
+    \'y': ['<Plug>(easyoperator-line-yank)', 'yank'],
+    \'d': ['<Plug>(easyoperator-line-delete)', 'delete'],
+    \}
+
 """" Motion
 let g:which_key_map.m = {
     \'name': '+motion',
@@ -176,13 +214,6 @@ let g:which_key_map.m = {
     \'k': ['<Plug>(easymotion-k)', 'EasyMotion Line Up'],
     \'s': ['<Plug>(easymotion-sn)', 'EasyMotion Sneak'],
     \'w': ['<Plug>(easymotion-wl)', 'EasyMotion Word']
-    \}
-
-"""" Vimux
-let g:which_key_map.v = {
-    \'name': '+vimux',
-    \'o': [':VimuxPromptCommand', 'open'],
-    \'c': [':VimuxCloseRunner', 'close']
     \}
 
 """" Searching
@@ -204,15 +235,15 @@ let g:which_key_map.s = {
     \}
     \}
 
-"""" Buffers
-let g:which_key_map.b = {
-    \'name': '+buffers',
-    \'p': [':bp', 'previous'],
-    \'n': [':bn', 'next'],
-    \'k': [':bufdo bd', 'kill all'],
-    \'d': [':bd', 'kill current'],
-    \'c': [':bp \| bd #', 'kill keep split'],
+"""" Vimux
+let g:which_key_map.v = {
+    \'name': '+vimux',
+    \'o': [':VimuxPromptCommand', 'open'],
+    \'c': [':VimuxCloseRunner', 'close']
     \}
+
+"""" Write
+let g:which_key_map.w = [':w', 'write']
 
 """" Completion
 let g:which_key_map.y = {
@@ -220,34 +251,6 @@ let g:which_key_map.y = {
     \'d': [':YcmCompleter GoToDefinition', 'GoToDefinition'],
     \'r': [':YcmCompleter GoToReferences', 'GoToReferences'],
     \}
-
-"""" Git
-let g:which_key_map.g = {
-    \'name': '+git',
-    \'b': [':Gblame', 'blame'],
-    \'p': [':GitGutterPrevHunk', 'previous hunk'],
-    \'n': [':GitGutterNextHunk', 'next hunk'],
-    \'d': [':GitGutterUndoHunk', 'delete hunk'],
-    \'h': [':call VimuxRunCommandInDir("clear; git_author", 1)', 'history'],
-    \}
-
-"""" Line 
-let g:which_key_map.l = {
-    \'name': '+easyop-line',
-    \'y': ['<Plug>(easyoperator-line-yank)', 'yank'],
-    \'d': ['<Plug>(easyoperator-line-delete)', 'delete'],
-    \}
-
-"""" Commenting 
-let g:which_key_map.c = {
-    \'name': '+commenting',
-    \'t': ['<Plug>(NERDCommenterToggle)', 'toggle-comment'],
-    \'c': ['<Plug>(NERDCommenterComment)', 'comment'],
-    \'u': ['<Plug>(NERDCommenterUncomment)', 'uncomment'],
-    \}
-
-"""" Write
-let g:which_key_map.w = [':w', 'write']
 
 """" General Bindings
 map <F1> :w <CR>
@@ -261,11 +264,9 @@ map <F8> :Ag! <CR>
 map <F9> :FZF <CR>
 map <F10> :FZF ~/Dropbox/Documents/SQLite/Databases
 map <F12> :call VimuxRunCommandInDir("clear; ll", 0)<CR>
-imap <M-Space> <Esc>
-map <C-S> "_d
 map Y y$
 
-" Force vim's serach to always remain centered on the screen
+" Force vim's search to always remain centered on the screen
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
@@ -273,7 +274,6 @@ nnoremap # #zz
 
 """ Text expansions
 iabbrev break;; # ----------------------------------------------------------------------------------------
-command! Date :read !date + '\%Y-\%m-\%d'
 
 """ Custom Functions
 let g:CustomEditorStateNormal = 1
@@ -300,4 +300,4 @@ command! ReloadConf :so ~/.config/nvim/init.vim
 autocmd BufRead *sqli set ft=sql
 
 " Toggle to keep cursor centered on screen
-nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
+"nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
