@@ -22,9 +22,7 @@ Plug 'rhysd/committia.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
-"Plug 'prettier/vim-prettier', {'do': npm install'}
 Plug 'airblade/vim-gitgutter'
-Plug 'haya14busa/vim-easyoperator-line'
 Plug 'liuchengxu/vim-which-key'
 Plug 'drewtempelmeyer/palenight.vim'
 
@@ -41,9 +39,6 @@ set expandtab tabstop=4 shiftwidth=4 smarttab
 set number relativenumber
 set lazyredraw
 set nowrap
-hi! Whitespace guifg=#b2b2b2
-hi! Folded guifg=#00b3b3
-set termguicolors
 filetype plugin on  " Allow filetype plugins to be enabled
 
 """ Plugin Settings
@@ -123,10 +118,6 @@ let g:ale_python_flake8_options = '--ignore=E501'  " suppress line length warnin
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 
-"""" EasyOperator
-let g:EasyOperator_line_do_mapping = 0
-
-
 """" WhichKey
 let g:which_key_map = {}
 call which_key#register('<Space>', "g:which_key_map")
@@ -138,12 +129,9 @@ set timeoutlen=100
 set updatetime=100
 
 """" ayu
+set termguicolors
 let ayucolor='mirage'
 colorscheme ayu
-
-"""" palenight
-"set background=dark
-"colorscheme palenight
 
 """ Key Bindings
 """" Change leader to space key (KEEP THIS ABOVE OTHER LEADER MAPPINGS)
@@ -198,14 +186,7 @@ let g:which_key_map.g = {
     \}
 
 """" Highlighting
-let g:which_key_map.h = [':noh', 'no highlights']
-
-"""" Line 
-let g:which_key_map.l = {
-    \'name': '+easyop-line',
-    \'y': ['<Plug>(easyoperator-line-yank)', 'yank'],
-    \'d': ['<Plug>(easyoperator-line-delete)', 'delete'],
-    \}
+let g:which_key_map.h = [":let @/=''", 'no highlights']
 
 """" Motion
 let g:which_key_map.m = {
@@ -231,7 +212,7 @@ let g:which_key_map.s = {
     \},
     \'c': {
         \'name': '+file_content_search',
-        \'h': [':Ag', 'here'],
+        \'h': [':Ag!', 'here'],
     \}
     \}
 
@@ -254,16 +235,9 @@ let g:which_key_map.y = {
 
 """" General Bindings
 map <F1> :w <CR>
-map <F2> :noh <CR>
 map <F3> :bd <CR> 
 map <F4> :bp <CR>
 map <F5> :bn <CR>
-map <F6> :YcmCompleter GoToDefinition <CR>
-map <F7> :YcmCompleter GoToReferences <CR>
-map <F8> :Ag! <CR>
-map <F9> :FZF <CR>
-map <F10> :FZF ~/Dropbox/Documents/SQLite/Databases
-map <F12> :call VimuxRunCommandInDir("clear; ll", 0)<CR>
 map Y y$
 
 " Force vim's search to always remain centered on the screen
