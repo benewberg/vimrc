@@ -11,7 +11,7 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
-Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-commentary'  " gcc to comment a line; 3gcj to comment 3 lines down, etc"
 Plug 'jiangmiao/auto-pairs'
 Plug 'w0rp/ale'
 Plug 'benmills/vimux'
@@ -24,7 +24,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
-Plug 'drewtempelmeyer/palenight.vim'
+Plug 'bkad/CamelCaseMotion'
 
 call plug#end()
 
@@ -70,6 +70,7 @@ let g:airline#extensions#tmuxline#enabled = 0
 let g:airline_section_x = '' 
 let g:airline_section_y = '%{getcwd()}' 
 set noshowmode
+set ttimeoutlen=10  " Set the escape key timeout to very little
 " comment out the below section if you don't have a patched font installed (eg a nerd font)
 "if !exists('g:airline_symbols')
 "    let g:airline_symbols = {}
@@ -112,6 +113,7 @@ let g:ale_linters = {
 \}
 let g:ale_sign_column_always = 1
 let g:ale_completion_enabled = 0
+let g:ale_enabled = 0  "turned off by default
 let g:ale_python_flake8_options = '--ignore=E501'  " suppress line length warnings
 
 """" EasyMotion
@@ -121,7 +123,7 @@ let g:EasyMotion_smartcase = 1
 """" WhichKey
 let g:which_key_map = {}
 call which_key#register('<Space>', "g:which_key_map")
-set timeoutlen=100
+set timeoutlen=500
 
 """" GitGutter
 " Allow git-gutter to display the changes to the file faster (default in vim
@@ -150,12 +152,18 @@ nnoremap <C-k> <C-W><up>
 nnoremap <C-l> <C-W><right>
 nnoremap <bs> <C-W><left>
 
+""" CamelCaseMotion
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+omap <silent> iw <Plug>CamelCaseMotion_iw
+
 """" Linting
 let g:which_key_map.a = {
     \'name': '+ale',
-    \'e': [':ALEEnable', 'Enable ALE'],
-    \'d': [':ALEDisable', 'Disable ALE'],
-    \'t': [':ALEToggle', 'Toggle ALE']
+    \'t': [':ALEToggle', 'Toggle ALE'],
+    \'p': ['<Plug>(ale_previous_wrap)', 'previous error'],
+    \'n': ['<Plug>(ale_next_wrap)', 'next error']
     \}
 
 """" Buffers
@@ -171,8 +179,8 @@ let g:which_key_map.b = {
 """" Commenting 
 let g:which_key_map.c = {
     \'name': '+commenting',
-    \'t': [':TComment', 'toggle-comment'],
-    \'b': [":'<,'>TCommentBlock", 'comment block']
+    \'t': [':Commentary', 'toggle comment'],
+    \'b': [":'<,'>Commentary", 'comment block']
     \}
 
 """" Git
@@ -183,6 +191,11 @@ let g:which_key_map.g = {
     \'n': [':GitGutterNextHunk', 'next hunk'],
     \'d': [':GitGutterUndoHunk', 'delete hunk'],
     \'h': [':call VimuxRunCommandInDir("clear; git_author", 1)', 'history'],
+    \'l': {
+        \'name': '+log',
+        \'a': [':Glog %', 'All commits for file'],
+        \'r': [':Glog -n 5 %', 'Recent (5) commits for this file'],
+        \},
     \}
 
 """" Highlighting
@@ -219,8 +232,9 @@ let g:which_key_map.s = {
 """" Vimux
 let g:which_key_map.v = {
     \'name': '+vimux',
-    \'o': [':VimuxPromptCommand', 'open'],
-    \'c': [':VimuxCloseRunner', 'close']
+    \'o': [':call VimuxOpenRunner()', 'open'],
+    \'i': [':call VimuxInspectRunner()', 'inspect'],
+    \'q': [':VimuxCloseRunner', 'close']
     \}
 
 """" Write
@@ -235,10 +249,11 @@ let g:which_key_map.y = {
 
 """" General Bindings
 map <F1> :w <CR>
-map <F3> :bd <CR> 
-map <F4> :bp <CR>
-map <F5> :bn <CR>
-map Y y$
+map <F3> :bp <CR> 
+map <F4> :bn <CR>
+map <F5> :bd <CR>
+nnoremap Y y$
+nnoremap U <c-r>
 
 " Force vim's search to always remain centered on the screen
 nnoremap n nzz
@@ -247,7 +262,8 @@ nnoremap * *zz
 nnoremap # #zz
 
 """ Text expansions
-iabbrev break;; # ----------------------------------------------------------------------------------------
+iabbrev lbreak;; # ---------------------------------------------------------------------------------------------------
+iabbrev break;; # -----------------------------------------------------------------------------------------------
 
 """ Custom Functions
 let g:CustomEditorStateNormal = 1
