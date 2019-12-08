@@ -25,6 +25,8 @@ Plug 'edkolev/promptline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
 Plug 'bkad/CamelCaseMotion'
+" Plug 'vim-scripts/confirm-quit'
+" Plug 'janko/vim-test'
 
 call plug#end()
 
@@ -62,9 +64,9 @@ let g:ycm_add_preview_to_completeopt = 0
 
 """" vim-airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extension#ale#enabled = 1
-let g:airline_powerline_fonts = 1
 let g:airline_them = 'wombat'
 let g:airline#extensions#tmuxline#enabled = 0
 let g:airline_section_x = '' 
@@ -81,8 +83,8 @@ set ttimeoutlen=10  " Set the escape key timeout to very little
 "let g:airline_left_alt_sep = '\ue0b9'
 
 """ indentLine
-"let g:indentLine_char = '┊'
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " This will indent using a diff char per level
+let g:indentLine_char = '¦'
+" let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " This will indent using a diff char per level
 let g:indentLine_color_gui = '#4c4c4b'  " Ensure the indent char is gray
 
 """" auto-pairs
@@ -98,6 +100,11 @@ let g:fastfold_savehook = 0
 
 """" FZF
 " File searching with ag
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
 let g:ackprg = 'ag --vimgrep'
 command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
@@ -119,6 +126,11 @@ let g:ale_python_flake8_options = '--ignore=E501'  " suppress line length warnin
 """" EasyMotion
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
+let g:EasyMotion_add_search_history = 0
+
+"""" ConfirmQuit
+" cnoremap <silent> q<CR>  :call confirm_quit#confirm(9, 'last')<CR>
+" let g:confirm_quit_nomap = 1  " Prefer not to use the default mappings
 
 """" WhichKey
 let g:which_key_map = {}
@@ -129,6 +141,15 @@ set timeoutlen=500
 " Allow git-gutter to display the changes to the file faster (default in vim
 " is 4000, or 4 seconds)
 set updatetime=100
+
+"""" VimTest
+let test#python#runner = 'nose'
+let test#strategy = 'vimux'
+let test#python#nose#options = {
+    \'file': '-sv --nologcapture --with-id',
+    \'nearest': '-sv --with-id',
+    \'suite': '-sv',
+\}
 
 """" ayu
 set termguicolors
@@ -153,10 +174,10 @@ nnoremap <C-l> <C-W><right>
 nnoremap <bs> <C-W><left>
 
 """ CamelCaseMotion
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-omap <silent> iw <Plug>CamelCaseMotion_iw
+" map <silent> w <Plug>CamelCaseMotion_w
+" map <silent> b <Plug>CamelCaseMotion_b
+" map <silent> e <Plug>CamelCaseMotion_e
+" omap <silent> iw <Plug>CamelCaseMotion_iw
 
 """" Linting
 let g:which_key_map.a = {
@@ -223,10 +244,22 @@ let g:which_key_map.s = {
         \'d': [':FZF ~/Dropbox/Documents/SQLite/Databases', 'databases'],
         \'h': [':FZF', 'here'],
     \},
+    \'r': {
+        \'name': '+file_content_search_regex',
+        \'h': [':Rg', 'here'],
+    \},
     \'c': {
         \'name': '+file_content_search',
         \'h': [':Ag!', 'here'],
     \}
+    \}
+
+"""" Tests
+let g:which_key_map.t = {
+    \'name': '+tests',
+    \'n': [':TestNearest', 'Run test nearest cursor'],
+    \'f': [':TestFile', 'Run current test file'],
+    \'s': [':TestSuite', 'Run current test suite'],
     \}
 
 """" Vimux
@@ -249,9 +282,9 @@ let g:which_key_map.y = {
 
 """" General Bindings
 map <F1> :w <CR>
-map <F3> :bp <CR> 
-map <F4> :bn <CR>
-map <F5> :bd <CR>
+map <F4> :bp <CR> 
+map <F5> :bn <CR>
+map <F12> :bd <CR>
 nnoremap Y y$
 nnoremap U <c-r>
 
