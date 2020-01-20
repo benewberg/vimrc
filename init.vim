@@ -11,22 +11,22 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-commentary'  " gcc to comment a line; 3gcj to comment 3 lines down, etc"
+Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'  " Allow for repeating operations used by vim-surround
 Plug 'w0rp/ale'
-Plug 'benmills/vimux'
 Plug 'ayu-theme/ayu-vim'
 Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 Plug 'rhysd/committia.vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'edkolev/tmuxline.vim'
-Plug 'edkolev/promptline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
-Plug 'bkad/CamelCaseMotion'
 " Plug 'vim-scripts/confirm-quit'
-" Plug 'janko/vim-test'
+Plug 'janko/vim-test'
+Plug 'tpope/vim-dispatch'
+Plug 'psliwka/vim-smoothie'
 
 call plug#end()
 
@@ -44,23 +44,12 @@ set nowrap
 filetype plugin on  " Allow filetype plugins to be enabled
 
 """ Plugin Settings
-"""" Tmuxline
-let g:tmuxline_preset = {
-    \'a': '#S',
-    \'win': ['#I', '#W'],
-    \'cwin': ['#I', '#W#F'],
-    \'y': ["%F", "%H:%M"],
-    \'z': ['#h'],
-    \'options': {
-        \'status-justify': 'left'
-        \}}
-let g:tmuxline_theme = 'powerline'
-
 """" YouCompleteMe
-let g:ycm_python_binary_path = '/usr/bin/python'
+let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:loaded_python3_provider = 1
 set completeopt-=preview
 let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_key_detailed_diagnostics = ''
 
 """" vim-airline
 let g:airline#extensions#tabline#enabled = 1
@@ -83,7 +72,7 @@ set ttimeoutlen=10  " Set the escape key timeout to very little
 "let g:airline_left_alt_sep = '\ue0b9'
 
 """ indentLine
-let g:indentLine_char = '¦'
+let g:indentLine_char = '┆'
 " let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " This will indent using a diff char per level
 let g:indentLine_color_gui = '#4c4c4b'  " Ensure the indent char is gray
 
@@ -129,13 +118,12 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_add_search_history = 0
 
 """" ConfirmQuit
-" cnoremap <silent> q<CR>  :call confirm_quit#confirm(9, 'last')<CR>
-" let g:confirm_quit_nomap = 1  " Prefer not to use the default mappings
+let g:confirm_quit_nomap = 1  " Prefer not to use the default mappings
 
 """" WhichKey
 let g:which_key_map = {}
 call which_key#register('<Space>', "g:which_key_map")
-set timeoutlen=500
+set timeoutlen=1000
 
 """" GitGutter
 " Allow git-gutter to display the changes to the file faster (default in vim
@@ -144,12 +132,21 @@ set updatetime=100
 
 """" VimTest
 let test#python#runner = 'nose'
-let test#strategy = 'vimux'
+let test#strategy = {
+    \'file': 'dispatch',
+    \'last': 'dispatch',
+    \'nearest': 'dispatch',
+    \'suite': 'dispatch_background',
+\}
 let test#python#nose#options = {
-    \'file': '-sv --nologcapture --with-id',
+    \'file': '-sv --with-id',
+    \'last': '-sv',
     \'nearest': '-sv --with-id',
     \'suite': '-sv',
 \}
+
+"""" Dispatch
+let g:dispatch_no_maps = 1
 
 """" ayu
 set termguicolors
@@ -165,19 +162,12 @@ let mapleader = ' '
 """" WhichKey
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
-let g:which_key_map.d = 'which_key_ignore'
 
 """" Split Navigation
 nnoremap <C-j> <C-W><down>
 nnoremap <C-k> <C-W><up>
 nnoremap <C-l> <C-W><right>
 nnoremap <bs> <C-W><left>
-
-""" CamelCaseMotion
-" map <silent> w <Plug>CamelCaseMotion_w
-" map <silent> b <Plug>CamelCaseMotion_b
-" map <silent> e <Plug>CamelCaseMotion_e
-" omap <silent> iw <Plug>CamelCaseMotion_iw
 
 """" Linting
 let g:which_key_map.a = {
@@ -192,16 +182,7 @@ let g:which_key_map.b = {
     \'name': '+buffers',
     \'p': [':bp', 'previous'],
     \'n': [':bn', 'next'],
-    \'k': [':bufdo bd', 'kill all'],
     \'d': [':bd', 'kill current'],
-    \'c': [':bp \| bd #', 'kill keep split'],
-    \}
-
-"""" Commenting 
-let g:which_key_map.c = {
-    \'name': '+commenting',
-    \'t': [':Commentary', 'toggle comment'],
-    \'b': [":'<,'>Commentary", 'comment block']
     \}
 
 """" Git
@@ -225,10 +206,14 @@ let g:which_key_map.h = [":let @/=''", 'no highlights']
 """" Motion
 let g:which_key_map.m = {
     \'name': '+motion',
-    \'j': ['<Plug>(easymotion-j)', 'EasyMotion Line Down'],
-    \'k': ['<Plug>(easymotion-k)', 'EasyMotion Line Up'],
     \'s': ['<Plug>(easymotion-sn)', 'EasyMotion Sneak'],
-    \'w': ['<Plug>(easymotion-wl)', 'EasyMotion Word']
+    \}
+
+"""" Quickfix
+let g:which_key_map.q = {
+    \'name': '+quickfix-test',
+    \'o': [':Copen | :call Equal("horizontal")', 'open horizontal'],
+    \'c': [':cclose', 'close']
     \}
 
 """" Searching
@@ -257,17 +242,10 @@ let g:which_key_map.s = {
 """" Tests
 let g:which_key_map.t = {
     \'name': '+tests',
-    \'n': [':TestNearest', 'Run test nearest cursor'],
     \'f': [':TestFile', 'Run current test file'],
+    \'l': [':TestLast', 'Run last run test'],
+    \'n': [':TestNearest', 'Run test nearest cursor'],
     \'s': [':TestSuite', 'Run current test suite'],
-    \}
-
-"""" Vimux
-let g:which_key_map.v = {
-    \'name': '+vimux',
-    \'o': [':call VimuxOpenRunner()', 'open'],
-    \'i': [':call VimuxInspectRunner()', 'inspect'],
-    \'q': [':VimuxCloseRunner', 'close']
     \}
 
 """" Write
@@ -314,6 +292,20 @@ function! ToggleNormalMode()
     endif
 endfunction
 
+function! Equal(type)
+    if a:type ==? 'horizontal'
+        let l:total = str2float(&lines)
+    elseif a:type ==? 'vertical'
+        let l:total = str2float(&columns)
+    else
+        echom 'Unknown arg ' . a:type
+        return
+    endif
+
+    let l:half = string(round(total / 2))
+    execute ':resize ' . half
+endfunction
+
 " Commands to edit or reload this file
 command! EditConf :edit ~/.config/nvim/init.vim
 command! ReloadConf :so ~/.config/nvim/init.vim
@@ -322,5 +314,20 @@ command! ReloadConf :so ~/.config/nvim/init.vim
 " Highlight .sqli files as sql
 autocmd BufRead *sqli set ft=sql
 
-" Toggle to keep cursor centered on screen
-"nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
+""" Help
+"""" vim-commentary
+" gc{motion}            comment or uncomment lines that {motion} moves over
+" [count]gcc            comment or uncomment [count] lines
+
+"""" vim-surround
+" ds"           delete the surrounding double-quotes
+" cs])          change the surrounding square-brackets to parens
+" cs)}          change the surrounding parens to curly-brackets (with no spaces)
+" cs){          change the surrounding parens to curly-brackets (with spaces)
+" ysW"          surround the word (incl. punctuation) with double-quotes
+" ysiw'         surround the inner word with single-quotes
+
+"""" quickfix
+" :copen        open the quickfix window
+" :cclose       close the quickfix window
+" :cw           open the quickfix window if errors, otherwise close it
