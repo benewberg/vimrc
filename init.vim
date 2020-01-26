@@ -13,8 +13,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'  " Allow for repeating operations used by vim-surround
 Plug 'w0rp/ale'
 Plug 'ayu-theme/ayu-vim'
 Plug 'tmhedberg/SimpylFold'
@@ -23,10 +21,10 @@ Plug 'rhysd/committia.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
-" Plug 'vim-scripts/confirm-quit'
 Plug 'janko/vim-test'
 Plug 'tpope/vim-dispatch'
 Plug 'psliwka/vim-smoothie'
+Plug 'machakann/vim-sandwich'
 
 call plug#end()
 
@@ -117,9 +115,6 @@ let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_add_search_history = 0
 
-"""" ConfirmQuit
-let g:confirm_quit_nomap = 1  " Prefer not to use the default mappings
-
 """" WhichKey
 let g:which_key_map = {}
 call which_key#register('<Space>', "g:which_key_map")
@@ -192,11 +187,10 @@ let g:which_key_map.g = {
     \'p': [':GitGutterPrevHunk', 'previous hunk'],
     \'n': [':GitGutterNextHunk', 'next hunk'],
     \'d': [':GitGutterUndoHunk', 'delete hunk'],
-    \'h': [':call VimuxRunCommandInDir("clear; git_author", 1)', 'history'],
     \'l': {
         \'name': '+log',
         \'a': [':Glog %', 'All commits for file'],
-        \'r': [':Glog -n 5 %', 'Recent (5) commits for this file'],
+        \'r': [':0Glog -n 5 --color', 'Recent (5) commits for this file'],
         \},
     \}
 
