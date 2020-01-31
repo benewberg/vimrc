@@ -25,10 +25,11 @@ Plug 'janko/vim-test'
 Plug 'tpope/vim-dispatch'
 Plug 'psliwka/vim-smoothie'
 Plug 'machakann/vim-sandwich'
+Plug 'mhinz/vim-startify'
 
 call plug#end()
 
-""" General Settings
+""" General Config
 set mouse=a
 set ignorecase
 set cursorline
@@ -158,12 +159,6 @@ let mapleader = ' '
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
-"""" Split Navigation
-nnoremap <C-j> <C-W><down>
-nnoremap <C-k> <C-W><up>
-nnoremap <C-l> <C-W><right>
-nnoremap <bs> <C-W><left>
-
 """" Linting
 let g:which_key_map.a = {
     \'name': '+ale',
@@ -196,12 +191,6 @@ let g:which_key_map.g = {
 
 """" Highlighting
 let g:which_key_map.h = [":let @/=''", 'no highlights']
-
-"""" Motion
-let g:which_key_map.m = {
-    \'name': '+motion',
-    \'s': ['<Plug>(easymotion-sn)', 'EasyMotion Sneak'],
-    \}
 
 """" Quickfix
 let g:which_key_map.q = {
@@ -254,17 +243,22 @@ let g:which_key_map.y = {
 
 """" General Bindings
 map <F1> :w <CR>
-map <F4> :bp <CR> 
-map <F5> :bn <CR>
-map <F12> :bd <CR>
 nnoremap Y y$
 nnoremap U <c-r>
+nmap <Tab> :bn<CR>
+nmap <S-Tab> :bp<CR>
 
-" Force vim's search to always remain centered on the screen
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
+"""" Split Navigation
+nnoremap <C-j> <C-W><down>
+nnoremap <C-k> <C-W><up>
+nnoremap <C-l> <C-W><right>
+nnoremap <bs> <C-W><left>
+
+"""" Use easymotion as a search engine
+map / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map n <Plug>(easymotion-next)
+map N <Plug>(easymotion-prev)
 
 """ Text expansions
 iabbrev lbreak;; # ---------------------------------------------------------------------------------------------------
@@ -286,20 +280,6 @@ function! ToggleNormalMode()
     endif
 endfunction
 
-function! Equal(type)
-    if a:type ==? 'horizontal'
-        let l:total = str2float(&lines)
-    elseif a:type ==? 'vertical'
-        let l:total = str2float(&columns)
-    else
-        echom 'Unknown arg ' . a:type
-        return
-    endif
-
-    let l:half = string(round(total / 2))
-    execute ':resize ' . half
-endfunction
-
 " Commands to edit or reload this file
 command! EditConf :edit ~/.config/nvim/init.vim
 command! ReloadConf :so ~/.config/nvim/init.vim
@@ -307,6 +287,7 @@ command! ReloadConf :so ~/.config/nvim/init.vim
 """ Misc
 " Highlight .sqli files as sql
 autocmd BufRead *sqli set ft=sql
+au BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
 
 """ Help
 """" vim-commentary
