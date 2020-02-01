@@ -13,12 +13,11 @@ Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
-Plug 'w0rp/ale'
+Plug 'desmap/ale-sensible' | Plug 'w0rp/ale'
 Plug 'ayu-theme/ayu-vim'
 Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 Plug 'rhysd/committia.vim'
-Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
 Plug 'janko/vim-test'
@@ -26,6 +25,8 @@ Plug 'tpope/vim-dispatch'
 Plug 'psliwka/vim-smoothie'
 Plug 'machakann/vim-sandwich'
 Plug 'mhinz/vim-startify'
+Plug 'justinmk/vim-sneak'
+Plug 'haya14busa/incsearch.vim'
 
 call plug#end()
 
@@ -65,15 +66,11 @@ set ttimeoutlen=10  " Set the escape key timeout to very little
 "if !exists('g:airline_symbols')
 "    let g:airline_symbols = {}
 "endif
-"let g:airline_symbols.branch = '\ue725'
-"let g:airline_symbols.dirty = '\ue702'
 "let g:airline_left_sep = '\ue0b8'
 "let g:airline_left_alt_sep = '\ue0b9'
 
 """ indentLine
 let g:indentLine_char = '┆'
-" let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " This will indent using a diff char per level
-let g:indentLine_color_gui = '#4c4c4b'  " Ensure the indent char is gray
 
 """" auto-pairs
 let g:AutoPairsCenterLine = 0
@@ -106,15 +103,9 @@ cnoreabbrev Ack Ack!
 let g:ale_linters = {
 \   'python': ['flake8']
 \}
-let g:ale_sign_column_always = 1
 let g:ale_completion_enabled = 0
 let g:ale_enabled = 0  "turned off by default
 let g:ale_python_flake8_options = '--ignore=E501'  " suppress line length warnings
-
-"""" EasyMotion
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_add_search_history = 0
 
 """" WhichKey
 let g:which_key_map = {}
@@ -132,13 +123,11 @@ let test#strategy = {
     \'file': 'dispatch',
     \'last': 'dispatch',
     \'nearest': 'dispatch',
-    \'suite': 'dispatch_background',
 \}
 let test#python#nose#options = {
-    \'file': '-sv --with-id',
+    \'file': '-sv',
     \'last': '-sv',
-    \'nearest': '-sv --with-id',
-    \'suite': '-sv',
+    \'nearest': '-sv',
 \}
 
 """" Dispatch
@@ -148,6 +137,16 @@ let g:dispatch_no_maps = 1
 set termguicolors
 let ayucolor='mirage'
 colorscheme ayu
+" make the line numbers more visible (must be called after colorscheme)
+hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+"""" vim-startify
+let g:startify_session_persistence = 1
+" let g:startify_custom_header = []
+
+"""" incsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
 
 """ Key Bindings
 """" Change leader to space key (KEEP THIS ABOVE OTHER LEADER MAPPINGS)
@@ -175,33 +174,9 @@ let g:which_key_map.b = {
     \'d': [':bd', 'kill current'],
     \}
 
-"""" Git
-let g:which_key_map.g = {
-    \'name': '+git',
-    \'b': [':Gblame', 'blame'],
-    \'p': [':GitGutterPrevHunk', 'previous hunk'],
-    \'n': [':GitGutterNextHunk', 'next hunk'],
-    \'d': [':GitGutterUndoHunk', 'delete hunk'],
-    \'l': {
-        \'name': '+log',
-        \'a': [':Glog %', 'All commits for file'],
-        \'r': [':0Glog -n 5 --color', 'Recent (5) commits for this file'],
-        \},
-    \}
-
-"""" Highlighting
-let g:which_key_map.h = [":let @/=''", 'no highlights']
-
-"""" Quickfix
-let g:which_key_map.q = {
-    \'name': '+quickfix-test',
-    \'o': [':Copen | :call Equal("horizontal")', 'open horizontal'],
-    \'c': [':cclose', 'close']
-    \}
-
-"""" Searching
-let g:which_key_map.s = {
-    \'name': '+search',
+"""" Fuzzy Finding
+let g:which_key_map.f = {
+    \'name': '+find',
     \'f': {
         \'name': '+file_name_search',
         \'p': [':FZF ~/Projects/Python', 'python'],
@@ -222,13 +197,37 @@ let g:which_key_map.s = {
     \}
     \}
 
+"""" Git
+let g:which_key_map.g = {
+    \'name': '+git',
+    \'b': [':Gblame', 'blame'],
+    \'p': [':GitGutterPrevHunk', 'previous hunk'],
+    \'n': [':GitGutterNextHunk', 'next hunk'],
+    \'d': [':GitGutterUndoHunk', 'delete hunk'],
+    \'l': {
+        \'name': '+log',
+        \'a': [':Glog %', 'All commits for file'],
+        \'r': [':0Glog -n 5 --color', 'Recent (5) commits for this file'],
+        \},
+    \}
+
+"""" Highlighting
+let g:which_key_map.h = [":let @/=''", 'no highlights']
+
+"""" Quickfix
+let g:which_key_map.q = {
+    \'name': '+quickfix',
+    \'o': [':copen 40', 'open horizontal'],
+    \'v': [':vertical botright copen 200', 'open vertical'],
+    \'c': [':cclose', 'close'],
+    \}
+
 """" Tests
 let g:which_key_map.t = {
     \'name': '+tests',
     \'f': [':TestFile', 'Run current test file'],
     \'l': [':TestLast', 'Run last run test'],
     \'n': [':TestNearest', 'Run test nearest cursor'],
-    \'s': [':TestSuite', 'Run current test suite'],
     \}
 
 """" Write
@@ -254,11 +253,18 @@ nnoremap <C-k> <C-W><up>
 nnoremap <C-l> <C-W><right>
 nnoremap <bs> <C-W><left>
 
-"""" Use easymotion as a search engine
-map / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map n <Plug>(easymotion-next)
-map N <Plug>(easymotion-prev)
+"""" vim-sneak
+map <Leader>s <Plug>Sneak_s
+map <Leader>S <Plug>Sneak_S
+
+"""" incsearch
+" zz appended to center the searcn on the screen
+map n  <Plug>(incsearch-nohl-n)zz
+map N  <Plug>(incsearch-nohl-N)zz
+map *  <Plug>(incsearch-nohl-*)zz
+map #  <Plug>(incsearch-nohl-#)zz
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 
 """ Text expansions
 iabbrev lbreak;; # ---------------------------------------------------------------------------------------------------
@@ -287,22 +293,22 @@ command! ReloadConf :so ~/.config/nvim/init.vim
 """ Misc
 " Highlight .sqli files as sql
 autocmd BufRead *sqli set ft=sql
-au BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
+autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
 
 """ Help
 """" vim-commentary
 " gc{motion}            comment or uncomment lines that {motion} moves over
 " [count]gcc            comment or uncomment [count] lines
 
-"""" vim-surround
-" ds"           delete the surrounding double-quotes
-" cs])          change the surrounding square-brackets to parens
-" cs)}          change the surrounding parens to curly-brackets (with no spaces)
-" cs){          change the surrounding parens to curly-brackets (with spaces)
-" ysW"          surround the word (incl. punctuation) with double-quotes
-" ysiw'         surround the inner word with single-quotes
+"""" vim-sandwich recipes
+" sdb"          delete the surrounding _whatever_
+" sd"           delete the surrounding double-quotes
+" sr[(          change the surrounding square-brackets to parens
+" saiw"         add double-quotes to the inner-word object
+" saW"          add double-quotes to the word (incl. punctuation)
 
 """" quickfix
 " :copen        open the quickfix window
+" :copen 40     open the quickfix window with 40 lines of display
 " :cclose       close the quickfix window
 " :cw           open the quickfix window if errors, otherwise close it
