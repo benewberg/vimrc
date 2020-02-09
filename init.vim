@@ -21,12 +21,12 @@ Plug 'rhysd/committia.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
 Plug 'janko/vim-test'
-Plug 'tpope/vim-dispatch'
 Plug 'psliwka/vim-smoothie'
 Plug 'machakann/vim-sandwich'
 Plug 'mhinz/vim-startify'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
+Plug 'rhysd/git-messenger.vim'
 
 call plug#end()
 
@@ -42,6 +42,10 @@ set number relativenumber
 set lazyredraw
 set nowrap
 filetype plugin on  " Allow filetype plugins to be enabled
+
+""" python config
+" let g:python_host_prog = '/usr/bin/python'
+" let g:python3_host_prog = '/usr/bin/python3'
 
 """ Plugin Settings
 """" YouCompleteMe
@@ -84,6 +88,8 @@ let g:fastfold_force = 1
 let g:fastfold_savehook = 0
 
 """" FZF
+let g:fzf_layout = {'window': 'call FloatingFZF()'}
+
 " File searching with ag
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
@@ -120,15 +126,41 @@ set updatetime=100
 """" VimTest
 let test#python#runner = 'nose'
 let test#strategy = {
-    \'file': 'dispatch',
-    \'last': 'dispatch',
-    \'nearest': 'dispatch',
+    \'file': 'floating',
+    \'last': 'floating',
+    \'nearest': 'floating',
+    \'suite': 'neovim'
 \}
 let test#python#nose#options = {
     \'file': '-sv',
     \'last': '-sv',
     \'nearest': '-sv',
 \}
+function! OnTestExit(job_id, code, event) dict
+    if a:code == 0
+        close
+    endif
+endfunction
+function! TermTest(cmd)
+    call termopen(a:cmd, {'on_exit': 'OnTestExit'})
+endfunction
+function! FloatingTest(cmd)
+    let buf = nvim_create_buf(v:false, v:true)
+    let width = &columns - 4
+    let height = (&lines / 2) - 2
+    let offset = (&lines / 2) - 1
+    let opts = {
+        \'relative': 'editor',
+        \'row': offset,
+        \'col': 2,
+        \'width': width,
+        \'height': height,
+        \'style': 'minimal'
+        \}
+    call nvim_open_win(buf, v:true, opts)
+    call TermTest(a:cmd)
+endfunction
+let g:test#custom_strategies = {'floating': function('FloatingTest')}
 
 """" Dispatch
 let g:dispatch_no_maps = 1
@@ -142,11 +174,14 @@ hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=Dark
 
 """" vim-startify
 let g:startify_session_persistence = 1
-" let g:startify_custom_header = []
+let g:startify_custom_header = ['    benvim    ']
+
+"""" vim-sneak
+let g:sneak#label = 1  " for a lighter-weight easymotion feel
 
 """" incsearch
 set hlsearch
-let g:incsearch#auto_nohlsearch = 1
+let g:incsearch#auto_nohlsearch = 1  "auto turn off highlighting when navigating off
 
 """ Key Bindings
 """" Change leader to space key (KEEP THIS ABOVE OTHER LEADER MAPPINGS)
@@ -204,6 +239,10 @@ let g:which_key_map.g = {
     \'p': [':GitGutterPrevHunk', 'previous hunk'],
     \'n': [':GitGutterNextHunk', 'next hunk'],
     \'d': [':GitGutterUndoHunk', 'delete hunk'],
+    \'s': [':Gstatus', 'status'],
+    \'c': [':Gcommit', 'commit'],
+    \'t': [':GitGutterLineHighlightsToggle', 'toggle highlights'],
+    \'m': [':GitMessenger', 'message preview'],
     \'l': {
         \'name': '+log',
         \'a': [':Glog %', 'All commits for file'],
@@ -214,12 +253,13 @@ let g:which_key_map.g = {
 """" Highlighting
 let g:which_key_map.h = [":let @/=''", 'no highlights']
 
-"""" Quickfix
-let g:which_key_map.q = {
-    \'name': '+quickfix',
-    \'o': [':copen 40', 'open horizontal'],
-    \'v': [':vertical botright copen 200', 'open vertical'],
-    \'c': [':cclose', 'close'],
+"""" Sneak
+let g:which_key_map.s = {
+    \'name': '+sneak',
+    \'s': ['<Plug>Sneak_s', 'forward sneak'],
+    \'S': ['<Plug>Sneak_S', 'backward sneak'],
+    \'f': ['<Plug>Sneak_f', 'forward 1-char sneak'],
+    \'F': ['<Plug>Sneak_F', 'backward 1-char sneak'],
     \}
 
 """" Tests
@@ -253,10 +293,6 @@ nnoremap <C-k> <C-W><up>
 nnoremap <C-l> <C-W><right>
 nnoremap <bs> <C-W><left>
 
-"""" vim-sneak
-map <Leader>s <Plug>Sneak_s
-map <Leader>S <Plug>Sneak_S
-
 """" incsearch
 " zz appended to center the searcn on the screen
 map n  <Plug>(incsearch-nohl-n)zz
@@ -286,6 +322,22 @@ function! ToggleNormalMode()
     endif
 endfunction
 
+function! FloatingFZF()
+    let buf = nvim_create_buf(v:false, v:true)
+    let width = &columns - 4
+    let height = (&lines / 2) - 2
+    let offset = (&lines / 2) - 1
+    let opts = {
+        \'relative': 'editor',
+        \'row': offset,
+        \'col': 2,
+        \'width': width,
+        \'height': height,
+        \'style': 'minimal'
+        \}
+    call nvim_open_win(buf, v:true, opts)
+endfunction
+
 " Commands to edit or reload this file
 command! EditConf :edit ~/.config/nvim/init.vim
 command! ReloadConf :so ~/.config/nvim/init.vim
@@ -312,3 +364,9 @@ autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new
 " :copen 40     open the quickfix window with 40 lines of display
 " :cclose       close the quickfix window
 " :cw           open the quickfix window if errors, otherwise close it
+
+"""" git-messenger
+" :GitMessenger         open a floating window preview of the git message under the cursor
+" :GitMessenger (x2)    place the cursor inside the floating window preview
+" o                     go back to the commit prior to the current commit while in the git floating message preview
+" d                     view the diff of the commit while inside the git floating message window
