@@ -15,8 +15,6 @@ Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'desmap/ale-sensible' | Plug 'w0rp/ale'
 Plug 'ayu-theme/ayu-vim'
-Plug 'tmhedberg/SimpylFold'
-Plug 'Konfekt/FastFold'
 Plug 'rhysd/committia.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
@@ -78,14 +76,6 @@ let g:indentLine_char = '┆'
 
 """" auto-pairs
 let g:AutoPairsCenterLine = 0
-
-"""" SimplyFold
-set foldlevel=999
-let g:SimplyFold_fold_import = 0
-
-"""" FastFold
-let g:fastfold_force = 1
-let g:fastfold_savehook = 0
 
 """" FZF
 let g:fzf_layout = {'window': 'call FloatingFZF()'}
