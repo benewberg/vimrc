@@ -236,9 +236,11 @@ let g:which_key_map.f = {
 let g:which_key_map.g = {
     \'name': '+git',
     \'b': [':Gblame', 'blame'],
+    \'d': [':Gdiffsplit', 'diff split'],
     \'p': [':GitGutterPrevHunk', 'previous hunk'],
     \'n': [':GitGutterNextHunk', 'next hunk'],
-    \'d': [':GitGutterUndoHunk', 'delete hunk'],
+    \'u': [':GitGutterUndoHunk', 'undo hunk'],
+    \'h': [':GitGutterStageHunk', 'stage hunk'],
     \'s': [':Gstatus', 'status'],
     \'c': [':Gcommit', 'commit'],
     \'t': [':GitGutterLineHighlightsToggle', 'toggle highlights'],
@@ -295,10 +297,10 @@ nnoremap <bs> <C-W><left>
 
 """" incsearch
 " zz appended to center the searcn on the screen
-map n  <Plug>(incsearch-nohl-n)zz
-map N  <Plug>(incsearch-nohl-N)zz
-map *  <Plug>(incsearch-nohl-*)zz
-map #  <Plug>(incsearch-nohl-#)zz
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
@@ -349,8 +351,9 @@ autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new
 
 """ Help
 """" vim-commentary
-" gc{motion}            comment or uncomment lines that {motion} moves over
+" [count]gc{motion}     comment or uncomment lines that {motion} moves over
 " [count]gcc            comment or uncomment [count] lines
+" gcu                   uncomment all adjacent commented lines
 
 """" vim-sandwich recipes
 " sdb"          delete the surrounding _whatever_
@@ -370,3 +373,7 @@ autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new
 " :GitMessenger (x2)    place the cursor inside the floating window preview
 " o                     go back to the commit prior to the current commit while in the git floating message preview
 " d                     view the diff of the commit while inside the git floating message window
+
+"""" Vanilla Vim -- Increment/Decrement number
+" <C-a>         increment number under cursor or the next number found on the line
+" <C-x>         decrement number under cursor or the next number found on the line
