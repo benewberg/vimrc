@@ -44,7 +44,6 @@ set number relativenumber
 set lazyredraw
 set nowrap
 filetype plugin on  " Allow filetype plugins to be enabled
-set ttyfast  " Getting rid of the flashing of the screen when using smoothie
 set hidden  " Allow to switch buffers without saving
 
 " ---------------
@@ -229,7 +228,7 @@ let g:which_key_map.f = {
 let g:which_key_map.g = {
     \'name': '+git',
     \'b': [':Gblame', 'blame'],
-    \'d': [':Gdiffsplit', 'diff split'],
+    \'d': [':Gdiff', 'diff split'],
     \'p': [':GitGutterPrevHunk', 'previous hunk'],
     \'n': [':GitGutterNextHunk', 'next hunk'],
     \'u': [':GitGutterUndoHunk', 'undo hunk'],
