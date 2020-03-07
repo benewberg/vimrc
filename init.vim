@@ -27,6 +27,7 @@ Plug 'mhinz/vim-startify'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
 Plug 'rhysd/git-messenger.vim'
+Plug 'psf/black'
 
 call plug#end()
 
@@ -49,15 +50,15 @@ set hidden  " Allow to switch buffers without saving
 " ---------------
 "  python config
 " ---------------
-" let g:python_host_prog = '/usr/bin/python'
-" let g:python3_host_prog = '/usr/bin/python3'
+let g:python_host_prog = '~/.virtualenvs/neovim/bin/python'
+let g:python3_host_prog = '~/.virtualenvs/neovim/bin/python3'
 
 " -----------------
 "  plugin settings
 " -----------------
 "  YouCompleteMe
-let g:ycm_python_binary_path = '/usr/bin/python3'
-let g:loaded_python3_provider = 1
+" let g:ycm_python_binary_path = '/usr/bin/python3'
+" let g:loaded_python3_provider = 1
 set completeopt-=preview
 let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_key_detailed_diagnostics = ''
@@ -86,7 +87,7 @@ let g:indentLine_char = '┆'
 "  auto-pairs
 let g:AutoPairsCenterLine = 0
 
-"  FZF
+"  fzf
 let g:fzf_layout = {'window': 'call FloatingFZF()'}
 let g:ackprg = 'ag --vimgrep'
 command! -bang -nargs=* Ag
@@ -96,7 +97,7 @@ command! -bang -nargs=* Ag
   \                 <bang>0)
 cnoreabbrev Ack Ack!
 
-"  Ale
+"  ale
 let g:ale_linters = {
 \   'python': ['flake8']
 \}
@@ -153,9 +154,6 @@ function! FloatingTest(cmd)
 endfunction
 let g:test#custom_strategies = {'floating': function('FloatingTest')}
 
-"  Dispatch
-let g:dispatch_no_maps = 1
-
 "  ayu
 set termguicolors
 let ayucolor='mirage'
@@ -174,6 +172,10 @@ let g:sneak#label = 1  " for a lighter-weight easymotion feel
 set hlsearch
 let g:incsearch#auto_nohlsearch = 1  "auto turn off highlighting when navigating off
 
+"  black
+let g:black_virtualenv = '~/.virtualenvs/neovim'
+let g:black_linelength = 101
+
 " --------------
 "  key bindings
 " --------------
@@ -186,29 +188,31 @@ let mapleader = ' '
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
-"  Linting
+"  ale linting / formatting
 let g:which_key_map.a = {
     \'name': '+ale',
     \'t': [':ALEToggle', 'Toggle ALE'],
     \'p': ['<Plug>(ale_previous_wrap)', 'previous error'],
-    \'n': ['<Plug>(ale_next_wrap)', 'next error']
+    \'n': ['<Plug>(ale_next_wrap)', 'next error'],
+    \'b': ['Black', 'blacken']
     \}
 
-"  Buffers
+"  buffers
 let g:which_key_map.b = {
     \'name': '+buffers',
+    \'b': ['Buffers', 'buffers'],
     \'p': [':bp', 'previous'],
     \'n': [':bn', 'next'],
-    \'d': [':bd', 'kill current'],
+    \'d': [':bd', 'delete'],
     \}
 
-"  Change directory
+"  change directory
 let g:which_key_map.c = {
     \'name': '+cd',
     \'d': [':cd %:p:h', 'directory of this buffer'],
     \}
 
-"  Fuzzy Finding
+"  fuzzy finding
 let g:which_key_map.f = {
     \'name': '+find',
     \'f': {
@@ -224,7 +228,7 @@ let g:which_key_map.f = {
     \'a': [':Ag!', 'ag search here'],
     \}
 
-"  Git
+"  git
 let g:which_key_map.g = {
     \'name': '+git',
     \'b': [':Gblame', 'blame'],
@@ -232,8 +236,9 @@ let g:which_key_map.g = {
     \'p': [':GitGutterPrevHunk', 'previous hunk'],
     \'n': [':GitGutterNextHunk', 'next hunk'],
     \'u': [':GitGutterUndoHunk', 'undo hunk'],
-    \'h': [':GitGutterStageHunk', 'stage hunk'],
-    \'s': [':Gstatus', 'status'],
+    \'s': [':GitGutterStageHunk', 'stage hunk'],
+    \'g': ['Git', 'git status'],
+    \'h': ['GitGutterPreviewHunk', 'hunk preview'],
     \'c': [':Gcommit', 'commit'],
     \'t': [':GitGutterLineHighlightsToggle', 'toggle highlights'],
     \'m': [':GitMessenger', 'message preview'],
@@ -244,19 +249,10 @@ let g:which_key_map.g = {
         \},
     \}
 
-"  Highlighting
+"  highlighting
 let g:which_key_map.h = [":let @/=''", 'no highlights']
 
-"  Sneak
-let g:which_key_map.s = {
-    \'name': '+sneak',
-    \'s': ['<Plug>Sneak_s', 'forward sneak'],
-    \'S': ['<Plug>Sneak_S', 'backward sneak'],
-    \'f': ['<Plug>Sneak_f', 'forward 1-char sneak'],
-    \'F': ['<Plug>Sneak_F', 'backward 1-char sneak'],
-    \}
-
-"  Tests
+"  tests
 let g:which_key_map.t = {
     \'name': '+tests',
     \'f': [':TestFile', 'Run current test file'],
@@ -264,7 +260,7 @@ let g:which_key_map.t = {
     \'n': [':TestNearest', 'Run test nearest cursor'],
     \}
 
-"  Write
+"  write
 let g:which_key_map.w = [':w', 'write']
 
 "  YouCompleteMe
@@ -274,14 +270,18 @@ let g:which_key_map.y = {
     \'r': [':YcmCompleter GoToReferences', 'GoToReferences'],
     \}
 
-"  General Bindings
+"  vim-sandwich
+" use tpope's vim-surround key mappings; this allows us not to clash with vim-sneak
+runtime macros/sandwich/keymap/surround.vim
+
+"  general bindings
 map <F1> :w <CR>
 nnoremap Y y$
 nnoremap U <c-r>
 nmap <Tab> :bn<CR>
 nmap <S-Tab> :bp<CR>
 
-"  Split Navigation
+"  split navigation
 nnoremap <C-j> <C-W><down>
 nnoremap <C-k> <C-W><up>
 nnoremap <C-l> <C-W><right>
@@ -296,7 +296,7 @@ map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
-"  Text expansions
+"  text expansions
 iabbrev lbreak;; # ---------------------------------------------------------------------------------------------------
 iabbrev break;; # -----------------------------------------------------------------------------------------------
 
@@ -334,14 +334,14 @@ function! FloatingFZF()
     call nvim_open_win(buf, v:true, opts)
 endfunction
 
-" Commands to edit or reload this file
+" commands to edit or reload this file
 command! EditConf :edit ~/.config/nvim/init.vim
 command! ReloadConf :so ~/.config/nvim/init.vim
 
 " ------
 "  misc
 " ------
-" Highlight .sqli files as sql
+" highlight .sqli files as sql
 autocmd BufRead *sqli set ft=sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
 
@@ -354,11 +354,13 @@ autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new
 " gcu                   uncomment all adjacent commented lines
 
 "  vim-sandwich recipes
-" sdb"          delete the surrounding _whatever_
-" sd"           delete the surrounding double-quotes
-" sr[(          change the surrounding square-brackets to parens
-" saiw"         add double-quotes to the inner-word object
-" saW"          add double-quotes to the word (incl. punctuation)
+" dss           delete the surrounding _whatever_
+" ds"           delete the surrounding double-quotes
+" css(          change the surrounding _whatever_ to parens
+" cs[(          change the surrounding square-brackets to parens
+" ysiw"         add double-quotes to the inner-word object
+" ysiW"         add double-quotes to the inner-word object
+" dsf           delete the nearest function name and surrounding parens
 
 "  quickfix
 " :copen        open the quickfix window
