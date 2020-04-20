@@ -57,8 +57,7 @@ let g:python3_host_prog = '~/.virtualenvs/neovim/bin/python3'
 "  plugin settings
 " -----------------
 "  YouCompleteMe
-" let g:ycm_python_binary_path = '/usr/bin/python3'
-" let g:loaded_python3_provider = 1
+let g:ycm_python_binary_path = '/usr/bin/python3'
 set completeopt-=preview
 let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_key_detailed_diagnostics = ''
