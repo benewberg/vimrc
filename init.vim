@@ -44,8 +44,9 @@ set expandtab tabstop=4 shiftwidth=4 smarttab
 set number relativenumber
 set lazyredraw
 set nowrap
-filetype plugin on  " Allow filetype plugins to be enabled
-set hidden  " Allow to switch buffers without saving
+filetype plugin on  " allow filetype plugins to be enabled
+set hidden  " allow to switch buffers without saving
+set nostartofline  " don't move cursor to start of line when switching buffers
 
 " ---------------
 "  python config
@@ -105,6 +106,7 @@ let g:ale_enabled = 0  "turned off by default
 let g:ale_python_flake8_options = '--ignore=E501'  " suppress line length warnings
 
 "  WhichKey
+let g:which_key_use_floating_win = 1
 let g:which_key_map = {}
 call which_key#register('<Space>', "g:which_key_map")
 set timeoutlen=1000
@@ -120,7 +122,7 @@ hi link GitGutterChangeLineNr GitGutterChange
 hi link GitGutterDeleteLineNr GitGutterDelete
 hi link GitGutterChangeDeleteLineNr GitGutterChangeDelete
 
-"  VimTest
+"  vim-test
 let test#python#runner = 'nose'
 let test#strategy = {
     \'file': 'floating',
