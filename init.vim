@@ -113,6 +113,12 @@ set timeoutlen=1000
 " Allow git-gutter to display the changes to the file faster (default in vim
 " is 4000, or 4 seconds)
 set updatetime=100
+let g:gitgutter_map_keys = 0
+let g:gitgutter_highlight_linenrs = 1
+hi link GitGutterAddLineNr GitGutterAdd
+hi link GitGutterChangeLineNr GitGutterChange
+hi link GitGutterDeleteLineNr GitGutterDelete
+hi link GitGutterChangeDeleteLineNr GitGutterChangeDelete
 
 "  VimTest
 let test#python#runner = 'nose'
@@ -242,7 +248,7 @@ let g:which_key_map.g = {
     \'g': ['Git', 'git status'],
     \'h': ['GitGutterPreviewHunk', 'hunk preview'],
     \'c': [':Gcommit', 'commit'],
-    \'t': [':GitGutterLineHighlightsToggle', 'toggle highlights'],
+    \'t': [':GitGutterToggle', 'toggle highlights'],
     \'m': [':GitMessenger', 'message preview'],
     \'l': {
         \'name': '+log',
