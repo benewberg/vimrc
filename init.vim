@@ -172,6 +172,9 @@ let g:sneak#label = 1  " for a lighter-weight easymotion feel
 set hlsearch
 let g:incsearch#auto_nohlsearch = 1  "auto turn off highlighting when navigating off
 
+"  git-messenger
+let g:git_messenger_always_into_popup = 1
+
 "  black
 let g:black_virtualenv = '~/.virtualenvs/neovim'
 let g:black_linelength = 101
@@ -370,7 +373,6 @@ autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new
 
 "  git-messenger
 " :GitMessenger         open a floating window preview of the git message under the cursor
-" :GitMessenger (x2)    place the cursor inside the floating window preview
 " o                     go back to the commit prior to the current commit while in the git floating message preview
 " d                     view the diff of the commit while inside the git floating message window
 
