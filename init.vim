@@ -28,6 +28,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
 Plug 'rhysd/git-messenger.vim'
 Plug 'psf/black'
+Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
 
@@ -47,6 +48,7 @@ set nowrap
 filetype plugin on  " allow filetype plugins to be enabled
 set hidden  " allow to switch buffers without saving
 set nostartofline  " don't move cursor to start of line when switching buffers
+set inccommand=nosplit  " visually show live substitutions
 
 " ---------------
 "  python config
