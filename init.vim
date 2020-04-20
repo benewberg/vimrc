@@ -340,8 +340,8 @@ function! FloatingFZF()
 endfunction
 
 " commands to edit or reload this file
-command! EditConf :edit ~/.config/nvim/init.vim
-command! ReloadConf :so ~/.config/nvim/init.vim
+command! EditConf :edit ~/dotfiles/nvim/init.vim
+command! ReloadConf :so ~/dotfiles/nvim/init.vim
 
 " ------
 "  misc
