@@ -242,7 +242,6 @@ let g:which_key_map.f = {
 let g:which_key_map.g = {
     \'name': '+git',
     \'b': [':Gblame', 'blame'],
-    \'d': [':Gdiff', 'diff split'],
     \'p': [':GitGutterPrevHunk', 'previous hunk'],
     \'n': [':GitGutterNextHunk', 'next hunk'],
     \'u': [':GitGutterUndoHunk', 'undo hunk'],
@@ -252,11 +251,7 @@ let g:which_key_map.g = {
     \'c': [':Gcommit', 'commit'],
     \'t': [':GitGutterToggle', 'toggle highlights'],
     \'m': [':GitMessenger', 'message preview'],
-    \'l': {
-        \'name': '+log',
-        \'a': [':Glog %', 'All commits for file'],
-        \'r': [':0Glog -n 5 --color', 'Recent (5) commits for this file'],
-        \},
+    \'l': [':BCommits', 'log of commits']
     \}
 
 "  highlighting
