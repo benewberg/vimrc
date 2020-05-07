@@ -8,7 +8,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
-Plug 'Valloric/YouCompleteMe'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
@@ -62,12 +61,6 @@ let g:python3_host_prog = '~/.virtualenvs/neovim/bin/python3'
 " -----------------
 "  plugin settings
 " -----------------
-"  YouCompleteMe
-let g:ycm_python_binary_path = '/usr/bin/python3'
-set completeopt-=preview
-let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_key_detailed_diagnostics = ''
-
 "  vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -266,13 +259,6 @@ let g:which_key_map.t = {
     \'f': [':TestFile', 'Run current test file'],
     \'l': [':TestLast', 'Run last run test'],
     \'n': [':TestNearest', 'Run test nearest cursor'],
-    \}
-
-"  YouCompleteMe
-let g:which_key_map.y = {
-    \'name': '+youcompleteme',
-    \'d': [':YcmCompleter GoToDefinition', 'GoToDefinition'],
-    \'r': [':YcmCompleter GoToReferences', 'GoToReferences'],
     \}
 
 "  vim-sandwich
