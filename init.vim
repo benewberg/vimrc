@@ -281,11 +281,11 @@ let g:which_key_map.y = {
 runtime macros/sandwich/keymap/surround.vim
 
 "  general bindings
-noremap <F1> :w <CR>
+map <F1> :w <CR>
 nnoremap Y y$
 nnoremap U <c-r>
-nnoremap <Tab> :bn<CR>
-nnoremap <S-Tab> :bp<CR>
+nmap <Tab> :bn<CR>
+nmap <S-Tab> :bp<CR>
 
 "  split navigation
 nnoremap <C-j> <C-W><down>
@@ -295,12 +295,12 @@ nnoremap <bs> <C-W><left>
 
 "  incsearch
 " append 'zz' to each of these to auto-center the search on the screen
-noremap n  <Plug>(incsearch-nohl-n)
-noremap N  <Plug>(incsearch-nohl-N)
-noremap *  <Plug>(incsearch-nohl-*)
-noremap #  <Plug>(incsearch-nohl-#)
-noremap g* <Plug>(incsearch-nohl-g*)
-noremap g# <Plug>(incsearch-nohl-g#)
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 
 "  text expansions
 iabbrev lbreak;; # ---------------------------------------------------------------------------------------------------
