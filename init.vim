@@ -25,7 +25,6 @@ Plug 'mhinz/vim-startify'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
 Plug 'rhysd/git-messenger.vim'
-Plug 'psf/black'
 Plug 'machakann/vim-highlightedyank'
 Plug 'plexigras/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
@@ -224,10 +223,6 @@ let g:incsearch#auto_nohlsearch = 1  " auto turn off highlighting when navigatin
 "  git-messenger
 let g:git_messenger_always_into_popup = 1
 
-"  black
-let g:black_virtualenv = '~/.virtualenvs/neovim'
-let g:black_linelength = 101
-
 " --------------
 "  key bindings
 " --------------
@@ -246,7 +241,6 @@ let g:which_key_map.a = {
     \'t': [':ALEToggle', 'Toggle ALE'],
     \'p': ['<Plug>(ale_previous_wrap)', 'previous error'],
     \'n': ['<Plug>(ale_next_wrap)', 'next error'],
-    \'b': ['Black', 'blacken']
     \}
 
 "  buffers
