@@ -8,6 +8,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
@@ -61,6 +62,51 @@ let g:python3_host_prog = '~/.virtualenvs/neovim/bin/python3'
 " -----------------
 "  plugin settings
 " -----------------
+"  coc.nvim
+set nobackup
+set nowritebackup  " some servers have issues with backup files, see #649.
+set shortmess+=c  " don't pass messages to |ins-completion-menu|.
+set signcolumn=yes  " always show the signcolumn, otherwise it would shift the text each time
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+augroup mygroup
+  autocmd!
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Extension settings
+let g:coc_global_extensions = [
+    \'coc-python',
+    \'coc-snippets',
+    \'coc-json',
+    \]
+
 "  vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -212,10 +258,26 @@ let g:which_key_map.b = {
     \'d': [':bd', 'delete'],
     \}
 
-"  change directory
+"  coc.nvim
 let g:which_key_map.c = {
-    \'name': '+cd',
-    \'d': [':cd %:p:h', 'directory of this buffer'],
+    \'name': '+coc',
+    \'g': {
+        \'name': '+goto',
+        \'d': ['<Plug>(coc-definition)', 'definition'],
+        \'r': ['<Plug>(coc-references)', 'references'],
+        \},
+    \'f': [":call CocAction('format')", 'format file'],
+    \'i': [":call CocAction('runCommand', 'editor.action.organizeImport')", 'organize imports'],
+    \'r': ['<Plug>(coc-rename)', 'rename'],
+    \'p': [":call CocAction('doHover')", 'peek'],
+    \'a': ["<Plug>(coc-codeaction-selected)", 'codeAction'],
+    \'l': [":call CocAction('runCommand', 'python.enableLinting')", 'linting'],
+    \}
+
+"  directory
+let g:which_key_map.d = {
+    \'name': '+dir',
+    \'c': [':cd %:p:h', 'change to directory of this buffer'],
     \}
 
 "  fuzzy finding
