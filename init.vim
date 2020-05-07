@@ -14,7 +14,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
-Plug 'desmap/ale-sensible' | Plug 'w0rp/ale'
 Plug 'ayu-theme/ayu-vim'
 Plug 'rhysd/committia.vim'
 Plug 'airblade/vim-gitgutter'
@@ -110,7 +109,6 @@ let g:coc_global_extensions = [
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extension#ale#enabled = 1
 let g:airline_theme = 'ayu_mirage'
 let g:airline#extensions#tmuxline#enabled = 0
 let g:airline_section_x = '' 
@@ -137,14 +135,6 @@ command! -bang -nargs=* Ag
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
 cnoreabbrev Ack Ack!
-
-"  ale
-let g:ale_linters = {
-\   'python': ['flake8']
-\}
-let g:ale_completion_enabled = 0
-let g:ale_enabled = 0  "turned off by default
-let g:ale_python_flake8_options = '--ignore=E501'  " suppress line length warnings
 
 "  WhichKey
 let g:which_key_map = {}
@@ -234,14 +224,6 @@ let mapleader = ' '
 "  WhichKey
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
-
-"  ale linting / formatting
-let g:which_key_map.a = {
-    \'name': '+ale',
-    \'t': [':ALEToggle', 'Toggle ALE'],
-    \'p': ['<Plug>(ale_previous_wrap)', 'previous error'],
-    \'n': ['<Plug>(ale_next_wrap)', 'next error'],
-    \}
 
 "  buffers
 let g:which_key_map.b = {
