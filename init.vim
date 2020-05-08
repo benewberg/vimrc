@@ -16,14 +16,12 @@ Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'ayu-theme/ayu-vim'
 Plug 'rhysd/committia.vim'
-Plug 'airblade/vim-gitgutter'
 Plug 'liuchengxu/vim-which-key'
 Plug 'janko/vim-test'
 Plug 'machakann/vim-sandwich'
 Plug 'mhinz/vim-startify'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
-Plug 'rhysd/git-messenger.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'plexigras/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
@@ -103,7 +101,11 @@ let g:coc_global_extensions = [
     \'coc-python',
     \'coc-snippets',
     \'coc-json',
+    \'coc-git',
     \]
+
+" coc-git
+set updatetime=100
 
 "  vim-airline
 let g:airline#extensions#tabline#enabled = 1
@@ -140,17 +142,6 @@ cnoreabbrev Ack Ack!
 let g:which_key_map = {}
 call which_key#register('<Space>', "g:which_key_map")
 set timeoutlen=1000
-
-"  GitGutter
-" Allow git-gutter to display the changes to the file faster (default in vim
-" is 4000, or 4 seconds)
-set updatetime=100
-let g:gitgutter_map_keys = 0
-let g:gitgutter_highlight_linenrs = 1
-hi link GitGutterAddLineNr GitGutterAdd
-hi link GitGutterChangeLineNr GitGutterChange
-hi link GitGutterDeleteLineNr GitGutterDelete
-hi link GitGutterChangeDeleteLineNr GitGutterChangeDelete
 
 "  vim-test
 let test#python#runner = 'nose'
@@ -209,9 +200,6 @@ highlight Sneak guifg=#212733 guibg=#FFC44C ctermfg=black ctermbg=cyan
 "  incsearch
 set hlsearch
 let g:incsearch#auto_nohlsearch = 1  " auto turn off highlighting when navigating off
-
-"  git-messenger
-let g:git_messenger_always_into_popup = 1
 
 " --------------
 "  key bindings
@@ -276,15 +264,15 @@ let g:which_key_map.f = {
 let g:which_key_map.g = {
     \'name': '+git',
     \'b': [':Gblame', 'blame'],
-    \'p': [':GitGutterPrevHunk', 'previous hunk'],
-    \'n': [':GitGutterNextHunk', 'next hunk'],
-    \'u': [':GitGutterUndoHunk', 'undo hunk'],
-    \'s': [':GitGutterStageHunk', 'stage hunk'],
+    \'p': ['<Plug>(coc-git-prevchunk)', 'previous chunk'],
+    \'n': ['<Plug>(coc-git-nextchunk)', 'next chunk'],
+    \'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo chunk'],
+    \'s': [":call CocAction('runCommand', 'git.chunkStage')", 'stage chunk'],
     \'g': ['Git', 'git status'],
-    \'h': ['GitGutterPreviewHunk', 'hunk preview'],
+    \'i': ['<Plug>(coc-git-chunkinfo)', 'chunk info'],
     \'c': [':Gcommit', 'commit'],
-    \'t': [':GitGutterToggle', 'toggle highlights'],
-    \'m': [':GitMessenger', 'message preview'],
+    \'t': [":call CocAction('runCommand', 'git.toggleGutters')", 'toggle gutters'],
+    \'d': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
     \'l': [':BCommits', 'log of commits']
     \}
 
@@ -392,11 +380,6 @@ command! ReloadConf :so ~/dotfiles/nvim/init.vim
 " :copen 40     open the quickfix window with 40 lines of display
 " :cclose       close the quickfix window
 " :cw           open the quickfix window if errors, otherwise close it
-
-"  git-messenger
-" :GitMessenger         open a floating window preview of the git message under the cursor
-" o                     go back to the commit prior to the current commit while in the git floating message preview
-" d                     view the diff of the commit while inside the git floating message window
 
 "  Vanilla Vim -- Increment/Decrement number
 " <C-a>         increment number under cursor or the next number found on the line

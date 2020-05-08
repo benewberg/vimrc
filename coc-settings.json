@@ -7,5 +7,7 @@
     "python.linting.flake8Args": ["--ignore=E501"],
     "python.linting.enabled": false,
     "diagnostic.checkCurrentLine": true,
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    "git.showCommitInFloating": true,
+    "git.enableGutters": true
 }
