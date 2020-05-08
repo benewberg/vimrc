@@ -8,6 +8,9 @@
     "python.linting.enabled": false,
     "diagnostic.checkCurrentLine": true,
     "python.formatting.provider": "black",
+    "python.formatting.blackArgs": ["--line-length=101"],
     "git.showCommitInFloating": true,
-    "git.enableGutters": true
+    "git.enableGutters": true,
+    "git.removedSign.hlGroup": "GitGutterDelete",
+    "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete"
 }
