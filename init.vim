@@ -13,7 +13,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
-Plug 'jiangmiao/auto-pairs'
 Plug 'ayu-theme/ayu-vim'
 Plug 'rhysd/committia.vim'
 Plug 'liuchengxu/vim-which-key'
@@ -102,6 +101,7 @@ let g:coc_global_extensions = [
     \'coc-snippets',
     \'coc-json',
     \'coc-git',
+    \'coc-pairs',
     \]
 
 " coc-git
@@ -124,9 +124,6 @@ let g:airline_section_y = '%{getcwd()}'
 
 "  indentLine
 let g:indentLine_char = '┆'
-
-"  auto-pairs
-let g:AutoPairsCenterLine = 0
 
 "  fzf
 let g:fzf_layout = {'window': 'call FloatingFZF()'}
