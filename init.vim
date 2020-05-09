@@ -18,7 +18,6 @@ Plug 'rhysd/committia.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'janko/vim-test'
 Plug 'machakann/vim-sandwich'
-Plug 'mhinz/vim-startify'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
 Plug 'machakann/vim-highlightedyank'
@@ -102,6 +101,7 @@ let g:coc_global_extensions = [
     \'coc-json',
     \'coc-git',
     \'coc-pairs',
+    \'coc-lists',
     \]
 
 " coc-git
@@ -116,7 +116,7 @@ let g:airline#extensions#tmuxline#enabled = 0
 let g:airline_section_x = '' 
 let g:airline_section_y = '%{getcwd()}' 
 " comment out the below section if you don't have a patched font installed (eg a nerd font)
-"if !exists('g:airline_symbols')
+" if !exists('g:airline_symbols')
 "    let g:airline_symbols = {}
 " endif
 " let g:airline_left_sep = '\uE0B8'
@@ -186,10 +186,6 @@ colorscheme ayu
 " make the line numbers more visible (must be called after colorscheme)
 hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
-"  vim-startify
-let g:startify_session_persistence = 1
-let g:startify_custom_header = ['    benvim    ']  " for vanity and also to get rid of the ascii cow
-
 "  vim-sneak
 let g:sneak#label = 1  " for a lighter-weight easymotion feel
 highlight Sneak guifg=#212733 guibg=#FFC44C ctermfg=black ctermbg=cyan
@@ -213,48 +209,28 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 "  buffers
 let g:which_key_map.b = {
     \'name': '+buffers',
-    \'b': ['Buffers', 'buffers'],
-    \'p': [':bp', 'previous'],
-    \'n': [':bn', 'next'],
     \'d': [':bd', 'delete'],
+    \'l': [":exe 'CocList -A -N buffers'", 'list'],
+    \'m': [":exe 'CocList -A -N mru'", 'MRU'],
     \}
 
-"  coc.nvim
+"  change dir
 let g:which_key_map.c = {
-    \'name': '+coc',
-    \'g': {
-        \'name': '+goto',
-        \'d': ['<Plug>(coc-definition)', 'definition'],
-        \'r': ['<Plug>(coc-references)', 'references'],
-        \},
-    \'f': [":call CocAction('format')", 'format file'],
-    \'i': [":call CocAction('runCommand', 'editor.action.organizeImport')", 'organize imports'],
-    \'r': ['<Plug>(coc-rename)', 'rename'],
-    \'p': [":call CocAction('doHover')", 'peek'],
-    \'a': ["<Plug>(coc-codeaction-selected)", 'codeAction'],
-    \'l': [":call CocAction('runCommand', 'python.enableLinting')", 'linting'],
-    \}
-
-"  directory
-let g:which_key_map.d = {
-    \'name': '+dir',
-    \'c': [':cd %:p:h', 'change to directory of this buffer'],
+    \'name': '+cd',
+    \'a': [':cd ~/Projects/Arduino', 'Arduino'],
+    \'b': [':cd %:p:h', 'this buffer'],
+    \'c': [':cd ~/Projects/Cpp', 'cpp'],
+    \'d': [':cd ~/Dropbox/Documents/SQLite/Databases', 'databases'],
+    \'p': [':cd ~/Projects/Python', 'python'],
+    \'q': [':cd ~/Projects/Qt', 'Qt'],
+    \'r': [':cd ~/Projects/R', 'R'],
     \}
 
 "  fuzzy finding
 let g:which_key_map.f = {
     \'name': '+find',
-    \'f': {
-        \'name': '+file_name_search',
-        \'p': [':FZF ~/Projects/Python', 'python'],
-        \'c': [':FZF ~/Projects/Cpp', 'cpp'],
-        \'q': [':FZF ~/Projects/Qt', 'cpp'],
-        \'r': [':FZF ~/Projects/R', 'R'],
-        \'a': [':FZF ~/Projects/Arduino', 'arduino'],
-        \'d': [':FZF ~/Dropbox/Documents/SQLite/Databases', 'databases'],
-        \'h': [':FZF', 'here'],
-    \},
-    \'a': [':Ag!', 'ag search here'],
+    \'f': [":exe 'CocList -A -N files'", 'file name'],
+    \'g': [":exe 'CocList -A -N grep'", 'grep (rg)'],
     \}
 
 "  git
@@ -275,6 +251,29 @@ let g:which_key_map.g = {
 
 "  highlighting
 let g:which_key_map.h = [":let @/=''", 'no highlights']
+
+"  jump to
+let g:which_key_map.j = {
+    \'name': '+jump',
+    \'d': ['<Plug>(coc-definition)', 'definition'],
+    \'p': [":call CocAction('doHover')", 'peek'],
+    \'r': ['<Plug>(coc-references)', 'references'],
+    \}
+
+"  refactor
+let g:which_key_map.r = {
+    \'name': '+refactor',
+    \'f': [":call CocAction('format')", 'format file'],
+    \'l': [":call CocAction('runCommand', 'python.enableLinting')", 'linting'],
+    \'r': ['<Plug>(coc-rename)', 'rename'],
+    \}
+
+"  sessions
+let g:which_key_map.s = {
+    \'name': '+sessions',
+    \'l': [":exe 'CocList -N sessions'", 'list'],
+    \'s': [":call CocAction('runCommand', 'session.save')", 'save'],
+    \}
 
 "  tests
 let g:which_key_map.t = {
