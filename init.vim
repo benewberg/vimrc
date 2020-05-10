@@ -6,7 +6,6 @@
 call plug#begin('~/.config/nvim/plugged')
 
 Plug '~/.fzf'
-Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
@@ -124,16 +123,6 @@ let g:airline_section_y = '%{getcwd()}'
 
 "  indentLine
 let g:indentLine_char = '┆'
-
-"  fzf
-let g:fzf_layout = {'window': 'call FloatingFZF()'}
-let g:ackprg = 'ag --vimgrep'
-command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>,
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \                 <bang>0)
-cnoreabbrev Ack Ack!
 
 "  WhichKey
 let g:which_key_map = {}
