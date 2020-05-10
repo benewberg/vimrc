@@ -219,7 +219,7 @@ let g:which_key_map.c = {
 let g:which_key_map.f = {
     \'name': '+find',
     \'f': [":exe 'CocList -A -N files'", 'file name'],
-    \'g': [":exe 'CocList -A -N grep'", 'grep (rg)'],
+    \'g': [":exe 'CocList -A -N -I grep'", 'grep (rg)'],
     \}
 
 "  git
@@ -235,7 +235,7 @@ let g:which_key_map.g = {
     \'c': [':Gcommit', 'commit'],
     \'t': [":call CocAction('runCommand', 'git.toggleGutters')", 'toggle gutters'],
     \'d': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
-    \'l': [':BCommits', 'log of commits']
+    \'l': [":exe 'CocList -A -N commits'", 'list of commits']
     \}
 
 "  highlighting
