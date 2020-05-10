@@ -266,9 +266,6 @@ let g:which_key_map.t = {
     \'n': [':TestNearest', 'Run test nearest cursor'],
     \}
 
-"  write
-let g:which_key_map.w = [':w', 'write']
-
 "  YouCompleteMe
 let g:which_key_map.y = {
     \'name': '+youcompleteme',
