@@ -226,16 +226,16 @@ let g:which_key_map.f = {
 let g:which_key_map.g = {
     \'name': '+git',
     \'b': [':Gblame', 'blame'],
-    \'p': ['<Plug>(coc-git-prevchunk)', 'previous chunk'],
-    \'n': ['<Plug>(coc-git-nextchunk)', 'next chunk'],
-    \'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo chunk'],
-    \'s': [":call CocAction('runCommand', 'git.chunkStage')", 'stage chunk'],
+    \'c': [':Gcommit', 'commit'],
+    \'d': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
     \'g': ['Git', 'git status'],
     \'i': ['<Plug>(coc-git-chunkinfo)', 'chunk info'],
-    \'c': [':Gcommit', 'commit'],
+    \'l': [":exe 'CocList -A -N commits'", 'list of commits'],
+    \'n': ['<Plug>(coc-git-nextchunk)', 'next chunk'],
+    \'p': ['<Plug>(coc-git-prevchunk)', 'previous chunk'],
+    \'s': [":call CocAction('runCommand', 'git.chunkStage')", 'stage chunk'],
     \'t': [":call CocAction('runCommand', 'git.toggleGutters')", 'toggle gutters'],
-    \'d': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
-    \'l': [":exe 'CocList -A -N commits'", 'list of commits']
+    \'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo chunk'],
     \}
 
 "  highlighting
