@@ -178,7 +178,7 @@ let g:sneak#label = 1  " for a lighter-weight easymotion feel
 
 "  incsearch
 set hlsearch
-let g:incsearch#auto_nohlsearch = 1  "auto turn off highlighting when navigating off
+let g:incsearch#auto_nohlsearch = 1  " auto turn off highlighting when navigating off
 
 "  git-messenger
 let g:git_messenger_always_into_popup = 1
@@ -291,7 +291,7 @@ nmap <S-Tab> :bp<CR>
 nnoremap <C-j> <C-W><down>
 nnoremap <C-k> <C-W><up>
 nnoremap <C-l> <C-W><right>
-nnoremap <bs> <C-W><left>
+nnoremap <C-h> <C-W><left>
 
 "  incsearch
 " append 'zz' to each of these to auto-center the search on the screen
