@@ -6,8 +6,8 @@
 call plug#begin('~/.config/nvim/plugged')
 
 Plug '~/.fzf'
-Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
@@ -45,12 +45,6 @@ set inccommand=nosplit  " visually show live substitutions
 set clipboard=unnamedplus
 set noshowmode  " not necessary with a statusline plugin
 set ttimeoutlen=10  " Set the escape key timeout to very little
-
-" ---------------
-"  python config
-" ---------------
-let g:python_host_prog = '~/.virtualenvs/neovim/bin/python'
-let g:python3_host_prog = '~/.virtualenvs/neovim/bin/python3'
 
 " -----------------
 "  plugin settings
