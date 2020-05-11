@@ -13,4 +13,4 @@
   1. `:PlugInstall`
   2. `:Tmuxline airline_insert`
   3. `:TmuxlineSnapshot! $HOME/dotfiles/tmux/.tmux-line.conf`
-  4. In $HOME/.tmux.conf: `if-shell "[ -f ~/.no-powerline ]" "" "source-file $HOME/dotfiles/tmux/.tmux-line.conf"
+  4. In $HOME/.tmux.conf: `if-shell "[ -f ~/.no-powerline ]" "" "source-file $HOME/dotfiles/tmux/.tmux-line.conf"`
