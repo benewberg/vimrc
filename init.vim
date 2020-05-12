@@ -15,7 +15,6 @@ Plug 'tpope/vim-commentary'
 Plug 'ayu-theme/ayu-vim'
 Plug 'rhysd/committia.vim'
 Plug 'liuchengxu/vim-which-key'
-Plug 'janko/vim-test'
 Plug 'machakann/vim-sandwich'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
@@ -122,45 +121,6 @@ let g:indentLine_char = '┆'
 let g:which_key_map = {}
 call which_key#register('<Space>', "g:which_key_map")
 set timeoutlen=1000
-
-"  vim-test
-let test#python#runner = 'nose'
-let test#strategy = {
-    \'file': 'floating',
-    \'last': 'floating',
-    \'nearest': 'floating',
-    \'suite': 'neovim'
-\}
-let test#python#nose#options = {
-    \'file': '-sv',
-    \'last': '-sv',
-    \'nearest': '-sv',
-\}
-function! OnTestExit(job_id, code, event) dict
-    if a:code == 0
-        close
-    endif
-endfunction
-function! TermTest(cmd)
-    call termopen(a:cmd, {'on_exit': 'OnTestExit'})
-endfunction
-function! FloatingTest(cmd)
-    let buf = nvim_create_buf(v:false, v:true)
-    let width = &columns - 4
-    let height = (&lines / 2) - 2
-    let offset = (&lines / 2) - 1
-    let opts = {
-        \'relative': 'editor',
-        \'row': offset,
-        \'col': 2,
-        \'width': width,
-        \'height': height,
-        \'style': 'minimal'
-        \}
-    call nvim_open_win(buf, v:true, opts)
-    call TermTest(a:cmd)
-endfunction
-let g:test#custom_strategies = {'floating': function('FloatingTest')}
 
 "  ayu
 set termguicolors
