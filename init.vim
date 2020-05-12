@@ -27,6 +27,8 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'rhysd/git-messenger.vim'
 Plug 'psf/black'
 Plug 'machakann/vim-highlightedyank'
+Plug 'plexigras/promptline.vim'
+Plug 'edkolev/tmuxline.vim'
 
 call plug#end()
 
