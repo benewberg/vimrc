@@ -22,6 +22,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'plexigras/promptline.vim'
 Plug 'edkolev/tmuxline.vim'
+Plug 'voldikss/vim-floaterm'
 
 call plug#end()
 
@@ -95,6 +96,7 @@ let g:coc_global_extensions = [
     \'coc-git',
     \'coc-pairs',
     \'coc-lists',
+    \'coc-floaterm',
     \]
 
 " coc-git
@@ -177,8 +179,13 @@ highlight Sneak guifg=#212733 guibg=#FFC44C ctermfg=black ctermbg=cyan
 set hlsearch
 let g:incsearch#auto_nohlsearch = 1  " auto turn off highlighting when navigating off
 
+"  floaterm
+let g:floaterm_autoclose = 1
+let g:floaterm_width = 0.9
+let g:floaterm_height = 0.7
+
 " --------------
-"  key bindings
+"  key mappings
 " --------------
 " Change leader to space key (KEEP THIS ABOVE OTHER LEADER MAPPINGS)
 " This has to be higher in the file than any <Leader> mappings, since it resets any leader mappings
@@ -201,9 +208,9 @@ let g:which_key_map.b = {
 let g:which_key_map.c = {
     \'name': '+cd',
     \'a': [':cd ~/Projects/Arduino', 'Arduino'],
-    \'b': [':cd %:p:h', 'this buffer'],
     \'c': [':cd ~/Projects/Cpp', 'cpp'],
     \'d': [':cd ~/Dropbox/Documents/SQLite/Databases', 'databases'],
+    \'h': [':cd %:p:h', 'here (this buffer)'],
     \'p': [':cd ~/Projects/Python', 'python'],
     \'q': [':cd ~/Projects/Qt', 'Qt'],
     \'r': [':cd ~/Projects/R', 'R'],
@@ -214,6 +221,7 @@ let g:which_key_map.f = {
     \'name': '+find',
     \'f': [":exe 'CocList -A -N files'", 'file name'],
     \'g': [":exe 'CocList -A -N -I grep'", 'grep (rg)'],
+    \'x': [":call _FloatermFZF('~/Projects/Python/')", 'python (experimental)']
     \}
 
 "  git
@@ -261,9 +269,9 @@ let g:which_key_map.s = {
 "  tests
 let g:which_key_map.t = {
     \'name': '+tests',
-    \'f': [':TestFile', 'Run current test file'],
-    \'l': [':TestLast', 'Run last run test'],
-    \'n': [':TestNearest', 'Run test nearest cursor'],
+    \'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
+    \'d': [":call _FloatermPathCmd('nt', '%:p:h')", "dir"],
+    \'f': [":call _FloatermPathCmd('nt', '%:p')", "file"],
     \}
 
 "  vim-sandwich
@@ -295,6 +303,8 @@ map g# <Plug>(incsearch-nohl-g#)
 "  text expansions
 iabbrev lbreak;; # ---------------------------------------------------------------------------------------------------
 iabbrev break;; # -----------------------------------------------------------------------------------------------
+iabbrev current;; from nose.plugins.attrib import attr
+            \<CR>@attr('current')
 
 " ------------------
 "  custom functions
