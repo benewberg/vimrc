@@ -20,8 +20,6 @@ Plug 'machakann/vim-sandwich'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'plexigras/promptline.vim'
-Plug 'edkolev/tmuxline.vim'
 Plug 'voldikss/vim-floaterm'
 
 call plug#end()
