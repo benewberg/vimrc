@@ -154,6 +154,12 @@ let mapleader = ' '
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
+"  single
+let g:which_key_map['.'] = [':e ~/dotfiles/nvim/init.vim', 'open init']
+let g:which_key_map['/'] = [":let @/=''", 'no highlights']
+let g:which_key_map['<'] = [":set nonumber norelativenumber nolist | :exe 'IndentLinesDisable'", 'ed state off']
+let g:which_key_map['>'] = [":set number relativenumber list | :exe 'IndentLinesEnable'", 'ed state on']
+
 "  buffers
 let g:which_key_map.b = {
     \'name': '+buffers',
@@ -177,9 +183,10 @@ let g:which_key_map.c = {
 "  fuzzy finding
 let g:which_key_map.f = {
     \'name': '+find',
-    \'f': [":exe 'CocList -A -N files'", 'file name'],
-    \'g': [":exe 'CocList -A -N -I grep'", 'grep (rg)'],
-    \'x': [":call _FloatermFZF('~/Projects/Python/')", 'python (experimental)']
+    \'f': [":call _FloatermFZF('NONE')", 'files'],
+    \'F': [":exe 'CocList -N files'", 'files (using coc)'],
+    \'r': [":call PromptedFloatermSearch('NONE')", 'rg'],
+    \'R': [":exe 'CocList -A -N -I grep'", 'rg (using coc)'],
     \}
 
 "  git
@@ -190,16 +197,13 @@ let g:which_key_map.g = {
     \'d': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
     \'g': ['Git', 'git status'],
     \'i': ['<Plug>(coc-git-chunkinfo)', 'chunk info'],
+    \'j': ['<Plug>(coc-git-nextchunk)', 'next chunk'],
+    \'k': ['<Plug>(coc-git-prevchunk)', 'previous chunk'],
     \'l': [":exe 'CocList -A -N commits'", 'list of commits'],
-    \'n': ['<Plug>(coc-git-nextchunk)', 'next chunk'],
-    \'p': ['<Plug>(coc-git-prevchunk)', 'previous chunk'],
     \'s': [":call CocAction('runCommand', 'git.chunkStage')", 'stage chunk'],
     \'t': [":call CocAction('runCommand', 'git.toggleGutters')", 'toggle gutters'],
     \'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo chunk'],
     \}
-
-"  highlighting
-let g:which_key_map.h = [":let @/=''", 'no highlights']
 
 "  jump to
 let g:which_key_map.j = {
@@ -255,8 +259,6 @@ map n  <Plug>(incsearch-nohl-n)
 map N  <Plug>(incsearch-nohl-N)
 map *  <Plug>(incsearch-nohl-*)
 map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
 
 "  text expansions
 iabbrev lbreak;; # ---------------------------------------------------------------------------------------------------
@@ -267,21 +269,6 @@ iabbrev current;; from nose.plugins.attrib import attr
 " ------------------
 "  custom functions
 " ------------------
-let g:CustomEditorStateNormal = 1
-function! ToggleNormalMode()
-    if g:CustomEditorStateNormal
-        set nonumber norelativenumber
-        set nolist
-        IndentLinesDisable
-        let g:CustomEditorStateNormal = 0
-    else
-        set number relativenumber
-        set list
-        IndentLinesEnable
-        let g:CustomEditorStateNormal = 1
-    endif
-endfunction
-
 function! FloatingFZF()
     let buf = nvim_create_buf(v:false, v:true)
     let width = &columns - 4
@@ -296,6 +283,11 @@ function! FloatingFZF()
         \'style': 'minimal'
         \}
     call nvim_open_win(buf, v:true, opts)
+endfunction
+
+"  floaterm stuff
+function! _FloatermPathCmd(cmd, path)
+    call floaterm#new(a:cmd . ' ' . expand(a:path), {}, {}, v:true)
 endfunction
 
 "  custom commands
