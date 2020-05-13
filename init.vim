@@ -80,9 +80,9 @@ set ttimeoutlen=10  " Set the escape key timeout to very little
 " comment out the below section if you don't have a patched font installed (eg a nerd font)
 "if !exists('g:airline_symbols')
 "    let g:airline_symbols = {}
-"endif
-"let g:airline_left_sep = '\ue0b8'
-"let g:airline_left_alt_sep = '\ue0b9'
+" endif
+" let g:airline_left_sep = '\uE0B8'
+" let g:airline_left_alt_sep = '\UE0B9'
 
 "  indentLine
 let g:indentLine_char = '┆'
@@ -177,6 +177,7 @@ let g:startify_custom_header = ['    benvim    ']  " for vanity and also to get 
 
 "  vim-sneak
 let g:sneak#label = 1  " for a lighter-weight easymotion feel
+highlight Sneak guifg=#212733 guibg=#FFC44C ctermfg=black ctermbg=cyan
 
 "  incsearch
 set hlsearch
