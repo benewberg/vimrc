@@ -49,6 +49,7 @@ filetype plugin on  " allow filetype plugins to be enabled
 set hidden  " allow to switch buffers without saving
 set nostartofline  " don't move cursor to start of line when switching buffers
 set inccommand=nosplit  " visually show live substitutions
+set clipboard=unnamedplus
 
 " ---------------
 "  python config
