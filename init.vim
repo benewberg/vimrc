@@ -6,6 +6,7 @@
 call plug#begin('~/.config/nvim/plugged')
 
 Plug '~/.fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
@@ -47,6 +48,9 @@ set ttimeoutlen=10  " Set the escape key timeout to very little
 " -----------------
 "  plugin settings
 " -----------------
+"  fzf
+let g:fzf_layout = {'window': 'call FloatingFZF()'}
+
 "  coc.nvim
 set nobackup
 set nowritebackup  " some servers have issues with backup files, see #649.
@@ -199,7 +203,7 @@ let g:which_key_map.g = {
     \'i': ['<Plug>(coc-git-chunkinfo)', 'chunk info'],
     \'j': ['<Plug>(coc-git-nextchunk)', 'next chunk'],
     \'k': ['<Plug>(coc-git-prevchunk)', 'previous chunk'],
-    \'l': [":exe 'CocList -A -N commits'", 'list of commits'],
+    \'l': ['BCommits', 'list of commits'],
     \'s': [":call CocAction('runCommand', 'git.chunkStage')", 'stage chunk'],
     \'t': [":call CocAction('runCommand', 'git.toggleGutters')", 'toggle gutters'],
     \'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo chunk'],
@@ -296,6 +300,16 @@ autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
 command! EditConf :edit ~/dotfiles/nvim/init.vim
 command! ReloadConf :so ~/dotfiles/nvim/init.vim
+
+"  fzf
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --hidden --smart-case --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
+  \   <bang>0)
 
 " ------
 "  help
