@@ -187,9 +187,9 @@ let g:which_key_map.c = {
 "  fuzzy finding
 let g:which_key_map.f = {
     \'name': '+find',
-    \'f': [":call _FloatermFZF('NONE')", 'files'],
+    \'f': ["Files", 'files'],
     \'F': [":exe 'CocList -N files'", 'files (using coc)'],
-    \'r': [":call PromptedFloatermSearch('NONE')", 'rg'],
+    \'r': ["Rg", 'rg'],
     \'R': [":exe 'CocList -A -N -I grep'", 'rg (using coc)'],
     \}
 
@@ -236,8 +236,8 @@ let g:which_key_map.s = {
 let g:which_key_map.t = {
     \'name': '+tests',
     \'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
-    \'d': [":call _FloatermPathCmd('nt', '%:p:h')", "dir"],
-    \'f': [":call _FloatermPathCmd('nt', '%:p')", "file"],
+    \'d': [":call _FloatermPathCmd('nosetests', '%:p:h')", "dir"],
+    \'f': [":call _FloatermPathCmd('nosetests', '%:p')", "file"],
     \}
 
 "  vim-sandwich
@@ -294,6 +294,7 @@ function! _FloatermPathCmd(cmd, path)
     call floaterm#new(a:cmd . ' ' . expand(a:path), {}, {}, v:true)
 endfunction
 
+" -----------------
 "  custom commands
 " -----------------
 autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
