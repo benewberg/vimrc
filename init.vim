@@ -86,9 +86,6 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
 " Extension settings
 let g:coc_global_extensions = [
     \'coc-python',
@@ -236,8 +233,8 @@ let g:which_key_map.s = {
 let g:which_key_map.t = {
     \'name': '+tests',
     \'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
-    \'d': [":call _FloatermPathCmd('nosetests', '%:p:h')", "dir"],
-    \'f': [":call _FloatermPathCmd('nosetests', '%:p')", "file"],
+    \'d': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
+    \'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
     \}
 
 "  vim-sandwich
