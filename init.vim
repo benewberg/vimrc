@@ -342,13 +342,13 @@ endfunction
 
 " commands to edit or reload this file
 command! EditConf :edit ~/dotfiles/nvim/init.vim
-command! ReloadConf :so ~/dotfiles/nvim/init.vim
 
 " -----------------
 "  custom commands
 " -----------------
 autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
+command! ReloadConf :so ~/dotfiles/nvim/init.vim
 
 " ------
 "  help
