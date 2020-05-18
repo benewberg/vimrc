@@ -142,6 +142,7 @@ let g:incsearch#auto_nohlsearch = 1  " auto turn off highlighting when navigatin
 let g:floaterm_autoclose = 1
 let g:floaterm_width = 0.9
 let g:floaterm_height = 0.7
+let g:floaterm_wintitle = 0
 
 " --------------
 "  key mappings
@@ -157,16 +158,15 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
 "  single
 let g:which_key_map['.'] = [':e ~/dotfiles/nvim/init.vim', 'open init']
+let g:which_key_map[';'] = [':so ~/dotfiles/nvim/init.vim', 'source init']
 let g:which_key_map['/'] = [":let @/=''", 'no highlights']
-let g:which_key_map['<'] = [":set nonumber norelativenumber nolist | :exe 'IndentLinesDisable'", 'ed state off']
-let g:which_key_map['>'] = [":set number relativenumber list | :exe 'IndentLinesEnable'", 'ed state on']
 
 "  buffers
 let g:which_key_map.b = {
     \'name': '+buffers',
     \'d': [':bd', 'delete'],
-    \'l': [":exe 'CocList -A -N buffers'", 'list'],
-    \'m': [":exe 'CocList -A -N mru'", 'MRU'],
+    \'l': ["Buffers", 'list'],
+    \'m': ["History", 'mru'],
     \}
 
 "  change dir
@@ -237,6 +237,13 @@ let g:which_key_map.t = {
     \'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
     \}
 
+"  misc
+let g:which_key_map.z = {
+    \'name': '+misc',
+    \'<': [":set nonumber norelativenumber nolist | :exe 'IndentLinesDisable'", 'ed state off'],
+    \'>': [":set number relativenumber list | :exe 'IndentLinesEnable'", 'ed state on'],
+    \}
+
 "  vim-sandwich
 " use tpope's vim-surround key mappings; this allows us not to clash with vim-sneak
 runtime macros/sandwich/keymap/surround.vim
@@ -296,8 +303,6 @@ endfunction
 " -----------------
 autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
-command! EditConf :edit ~/dotfiles/nvim/init.vim
-command! ReloadConf :so ~/dotfiles/nvim/init.vim
 
 "  fzf
 command! -bang -nargs=? -complete=dir Files
