@@ -109,7 +109,6 @@ let g:ale_enabled = 0  "turned off by default
 let g:ale_python_flake8_options = '--ignore=E501'  " suppress line length warnings
 
 "  WhichKey
-let g:which_key_use_floating_win = 1
 let g:which_key_map = {}
 call which_key#register('<Space>', "g:which_key_map")
 set timeoutlen=1000
@@ -340,14 +339,11 @@ function! FloatingFZF()
     call nvim_open_win(buf, v:true, opts)
 endfunction
 
-" commands to edit or reload this file
-command! EditConf :edit ~/dotfiles/nvim/init.vim
-
-" -----------------
 "  custom commands
 " -----------------
 autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
+command! EditConf :edit ~/dotfiles/nvim/init.vim
 command! ReloadConf :so ~/dotfiles/nvim/init.vim
 
 " ------
