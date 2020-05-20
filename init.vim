@@ -50,6 +50,8 @@ set hidden  " allow to switch buffers without saving
 set nostartofline  " don't move cursor to start of line when switching buffers
 set inccommand=nosplit  " visually show live substitutions
 set clipboard=unnamedplus
+set noshowmode  " not necessary with a statusline plugin
+set ttimeoutlen=10  " Set the escape key timeout to very little
 
 " ---------------
 "  python config
@@ -75,8 +77,6 @@ let g:airline_theme = 'ayu_mirage'
 let g:airline#extensions#tmuxline#enabled = 0
 let g:airline_section_x = '' 
 let g:airline_section_y = '%{getcwd()}' 
-set noshowmode
-set ttimeoutlen=10  " Set the escape key timeout to very little
 " comment out the below section if you don't have a patched font installed (eg a nerd font)
 "if !exists('g:airline_symbols')
 "    let g:airline_symbols = {}
