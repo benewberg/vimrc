@@ -9,7 +9,7 @@ Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
-Plug 'benewberg/lightline.vim'  " fork for slightly modified ayu_mirage colors
+Plug 'mengelbrecht/lightline-bufferline' | Plug 'benewberg/lightline.vim'  " fork for slightly modified ayu_mirage colors
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
@@ -101,22 +101,18 @@ let g:coc_global_extensions = [
 set updatetime=100
 
 "  lightline
-let g:lightline = {
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-    \ },
-    \ 'colorscheme': 'ayu_mirage',
-    \ 'component': {
-        \   'lineinfo': ' %3l:%-2v',
-        \ },
-        \ 'component_function': {
-        \   'readonly': 'LightlineReadonly',
-        \   'gitbranch': 'LightlineFugitive'
-        \ },
-        \ 'separator': { 'left': '', 'right': '' },
-        \ 'subseparator': { 'left': '', 'right': '' }
-        \ }
+set showtabline=2  " force the tabline to always show
+let g:lightline = {}
+let g:lightline.active = {'left': [['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'modified']]}
+let g:lightline.colorscheme = 'ayu_mirage'
+let g:lightline.component = {'lineinfo': ' %3l:%-2v'}
+let g:lightline.component_function = {'readonly': 'LghtlineReadonly', 'gitbranch': 'LightlineFugitive'}
+let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.subseparator = {'left': '', 'right': '' }
+let g:lightline.tabline = {'left': [['buffers']], 'right': [['close']]}
+let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+let g:lightline.component_type = {'buffers': 'tabsel'}
+let g:lightline#bufferline#filename_modifier = ':t'  " show only file name
 function! LightlineReadonly()
     return &readonly ? '' : ''
 endfunction
