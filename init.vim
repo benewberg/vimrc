@@ -8,7 +8,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'vim-airline/vim-airline-themes' | Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
@@ -99,21 +98,6 @@ let g:coc_global_extensions = [
 
 " coc-git
 set updatetime=100
-
-"  vim-airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_theme = 'ayu_mirage'
-let g:airline#extensions#tmuxline#enabled = 0
-let g:airline_section_x = '' 
-let g:airline_section_y = '%{getcwd()}' 
-" comment out the below section if you don't have a patched font installed (eg a nerd font)
-" if !exists('g:airline_symbols')
-"    let g:airline_symbols = {}
-" endif
-" let g:airline_left_sep = '\uE0B8'
-" let g:airline_left_alt_sep = '\UE0B9'
 
 "  indentLine
 let g:indentLine_char = '┆'
