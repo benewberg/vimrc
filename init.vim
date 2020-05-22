@@ -50,6 +50,18 @@ set ttimeoutlen=10  " Set the escape key timeout to very little
 " -----------------
 "  fzf
 let g:fzf_layout = {'window': 'call FloatingFZF()'}
+let g:fzf_colors = {
+    \'fg': ['fg', 'Normal'],
+    \'hl': ['fg', 'Constant'],
+    \'fg+': ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+    \'bg+': ['bg', 'CursorLine', 'CursorColumn'],
+    \'hl+': ['fg', 'Statement'],
+    \'info': ['fg', 'PreProc'],
+    \'prompt': ['fg', 'Conditional'],
+    \'pointer': ['fg', 'Exception'],
+    \'marker': ['fg', 'Keyword'],
+    \'spinner': ['fg', 'Label'],
+    \'header': ['fg', 'Comment']}
 
 "  coc.nvim
 set nobackup
