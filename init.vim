@@ -183,9 +183,8 @@ nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
 "  single
-let g:which_key_map['.'] = [':e ~/dotfiles/nvim/init.vim', 'open init']
+let g:which_key_map[':'] = [':e ~/dotfiles/nvim/init.vim', 'open init']
 let g:which_key_map[';'] = [':so ~/dotfiles/nvim/init.vim', 'source init']
-let g:which_key_map['/'] = [":let @/=''", 'no highlights']
 
 "  buffers
 let g:which_key_map.b = {
@@ -268,6 +267,7 @@ let g:which_key_map.z = {
     \'name': '+misc',
     \'<': [":set nonumber norelativenumber nolist | :exe 'IndentLinesDisable'", 'ed state off'],
     \'>': [":set number relativenumber list | :exe 'IndentLinesEnable'", 'ed state on'],
+    \'/': [":let @/=''", 'no highlights']
     \}
 
 "  vim-sandwich
