@@ -49,7 +49,7 @@ set ttimeoutlen=10  " Set the escape key timeout to very little
 "  plugin settings
 " -----------------
 "  fzf
-let g:fzf_layout = {'window': 'call FloatingFZF()'}
+let g:fzf_layout = {'window': {'width': 0.9, 'height': 0.6}}
 let g:fzf_colors = {
     \'fg': ['fg', 'Normal'],
     \'hl': ['fg', 'Constant'],
@@ -62,6 +62,14 @@ let g:fzf_colors = {
     \'marker': ['fg', 'Keyword'],
     \'spinner': ['fg', 'Label'],
     \'header': ['fg', 'Comment']}
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --hidden --smart-case --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
+  \   <bang>0)
 
 "  coc.nvim
 set nobackup
@@ -169,6 +177,9 @@ let g:floaterm_autoclose = 1
 let g:floaterm_width = 0.9
 let g:floaterm_height = 0.7
 let g:floaterm_wintitle = 0
+function! _FloatermPathCmd(cmd, path)
+    call floaterm#new(a:cmd . ' ' . expand(a:path), {}, {}, v:true)
+endfunction
 
 " --------------
 "  key mappings
@@ -300,45 +311,11 @@ iabbrev break;; # --------------------------------------------------------------
 iabbrev current;; from nose.plugins.attrib import attr
             \<CR>@attr('current')
 
-" ------------------
-"  custom functions
-" ------------------
-function! FloatingFZF()
-    let buf = nvim_create_buf(v:false, v:true)
-    let width = &columns - 4
-    let height = (&lines / 2) - 2
-    let offset = (&lines / 2) - 1
-    let opts = {
-        \'relative': 'editor',
-        \'row': offset,
-        \'col': 2,
-        \'width': width,
-        \'height': height,
-        \'style': 'minimal'
-        \}
-    call nvim_open_win(buf, v:true, opts)
-endfunction
-
-"  floaterm stuff
-function! _FloatermPathCmd(cmd, path)
-    call floaterm#new(a:cmd . ' ' . expand(a:path), {}, {}, v:true)
-endfunction
-
 " -----------------
 "  custom commands
 " -----------------
 autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
-
-"  fzf
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --hidden --smart-case --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
-  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
-  \   <bang>0)
 
 " ------
 "  help
