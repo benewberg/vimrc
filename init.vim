@@ -45,6 +45,7 @@ set clipboard=unnamedplus
 set noshowmode  " not necessary with a statusline plugin
 set ttimeoutlen=10  " set the escape key timeout to very little
 let g:python3_host_prog="/home/ben/.virtualenvs/neovim/bin/python3"
+set updatetime=100  " make the git gutter updates show up quicker
 
 " -----------------
 "  plugin settings
@@ -117,9 +118,6 @@ let g:coc_global_extensions = [
     \'coc-lists',
     \'coc-floaterm',
     \]
-
-" coc-git
-set updatetime=100
 
 "  lightline
 set showtabline=2  " force the tabline to always show
