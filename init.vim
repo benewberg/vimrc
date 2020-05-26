@@ -207,13 +207,13 @@ let g:which_key_map.b = {
 "  change dir
 let g:which_key_map.c = {
     \'name': '+cd',
-    \'a': [':cd ~/Projects/Arduino', 'Arduino'],
-    \'c': [':cd ~/Projects/Cpp', 'cpp'],
-    \'d': [':cd ~/Dropbox/Documents/SQLite/Databases', 'databases'],
+    \'a': [':cd $PATH_PROG_ARDUINO', 'Arduino'],
+    \'c': [':cd $PATH_PROG_CPP', 'cpp'],
+    \'d': [':cd $PATH_DROPBOX_DB', 'databases'],
     \'h': [':cd %:p:h', 'here (this buffer)'],
     \'p': [':cd $PATH_PROG_PYTHON', 'python'],
-    \'q': [':cd ~/Projects/Qt', 'Qt'],
-    \'r': [':cd ~/Projects/R', 'R'],
+    \'q': [':cd $PATH_PROG_QT', 'Qt'],
+    \'r': [':cd $PATH_PROG_R', 'R'],
     \}
 
 "  fuzzy finding
