@@ -43,7 +43,8 @@ set nostartofline  " don't move cursor to start of line when switching buffers
 set inccommand=nosplit  " visually show live substitutions
 set clipboard=unnamedplus
 set noshowmode  " not necessary with a statusline plugin
-set ttimeoutlen=10  " Set the escape key timeout to very little
+set ttimeoutlen=10  " set the escape key timeout to very little
+let g:python3_host_prog="/home/ben/.virtualenvs/neovim/bin/python3"
 
 " -----------------
 "  plugin settings
@@ -212,7 +213,7 @@ let g:which_key_map.c = {
     \'c': [':cd ~/Projects/Cpp', 'cpp'],
     \'d': [':cd ~/Dropbox/Documents/SQLite/Databases', 'databases'],
     \'h': [':cd %:p:h', 'here (this buffer)'],
-    \'p': [':cd ~/Projects/Python', 'python'],
+    \'p': [':cd $PATH_PROG_PYTHON', 'python'],
     \'q': [':cd ~/Projects/Qt', 'Qt'],
     \'r': [':cd ~/Projects/R', 'R'],
     \}
