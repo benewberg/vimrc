@@ -151,17 +151,17 @@ endfunction
 "  indentLine
 let g:indentLine_char = '┆'
 
-"  WhichKey
-let g:which_key_map = {}
-call which_key#register('<Space>', "g:which_key_map")
-set timeoutlen=1000
-
 "  ayu
 set termguicolors
 let ayucolor='mirage'
 colorscheme ayu
 " make the line numbers more visible (must be called after colorscheme)
 hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+"  WhichKey
+let g:which_key_map = {}
+call which_key#register('<Space>', "g:which_key_map")
+set timeoutlen=1000
 
 "  vim-sneak
 let g:sneak#label = 1  " for a lighter-weight easymotion feel
@@ -220,9 +220,7 @@ let g:which_key_map.c = {
 let g:which_key_map.f = {
     \'name': '+find',
     \'f': ["Files", 'files'],
-    \'F': [":exe 'CocList -N files'", 'files (using coc)'],
     \'r': ["Rg", 'rg'],
-    \'R': [":exe 'CocList -A -N -I grep'", 'rg (using coc)'],
     \}
 
 "  git
@@ -232,13 +230,14 @@ let g:which_key_map.g = {
     \'c': [':Gcommit', 'commit'],
     \'d': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
     \'g': ['Git', 'git status'],
-    \'i': ['<Plug>(coc-git-chunkinfo)', 'chunk info'],
-    \'j': ['<Plug>(coc-git-nextchunk)', 'next chunk'],
-    \'k': ['<Plug>(coc-git-prevchunk)', 'previous chunk'],
+    \'i': ['<Plug>(coc-git-chunkinfo)', 'hunk info'],
+    \'j': ['<Plug>(coc-git-nextchunk)', 'next hunk'],
+    \'k': ['<Plug>(coc-git-prevchunk)', 'previous hunk'],
     \'l': ['BCommits', 'list of commits'],
-    \'s': [":call CocAction('runCommand', 'git.chunkStage')", 'stage chunk'],
+    \'r': [":exe 'Git reset -p'", 'unstage (reset) hunk'],
+    \'s': [":call CocAction('runCommand', 'git.chunkStage')", 'stage hunk'],
     \'t': [":call CocAction('runCommand', 'git.toggleGutters')", 'toggle gutters'],
-    \'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo chunk'],
+    \'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo hunk'],
     \}
 
 "  jump to
@@ -287,7 +286,6 @@ runtime macros/sandwich/keymap/surround.vim
 "  general bindings
 map <F1> :w <CR>
 nnoremap Y y$
-nnoremap U <c-r>
 nmap <Tab> :bn<CR>
 nmap <S-Tab> :bp<CR>
 
@@ -304,19 +302,20 @@ map N  <Plug>(incsearch-nohl-N)
 map *  <Plug>(incsearch-nohl-*)
 map #  <Plug>(incsearch-nohl-#)
 
-"  text expansions
-iabbrev lbreak;; # ---------------------------------------------------------------------------------------------------
-iabbrev break;; # -----------------------------------------------------------------------------------------------
-iabbrev current;; from nose.plugins.attrib import attr
-            \<CR>@attr('current')
-
 " -----------------
 "  custom commands
 " -----------------
 autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
 
-" ------
+" ---------------
+"  custom abbrev
+" ---------------
+iabbrev lbreak;; # ---------------------------------------------------------------------------------------------------
+iabbrev break;; # -----------------------------------------------------------------------------------------------
+iabbrev current;; from nose.plugins.attrib import attr
+            \<CR>@attr('current')
+
 "  help
 " ------
 "  vim-commentary
@@ -342,6 +341,3 @@ autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new
 "  Vanilla Vim -- Increment/Decrement number
 " <C-a>         increment number under cursor or the next number found on the line
 " <C-x>         decrement number under cursor or the next number found on the line
-
-"  Further reading
-" https://stevelosh.com/blog/2010/09/coming-home-to-vim/
