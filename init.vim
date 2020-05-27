@@ -116,7 +116,6 @@ let g:coc_global_extensions = [
     \'coc-git',
     \'coc-pairs',
     \'coc-lists',
-    \'coc-floaterm',
     \]
 
 "  lightline
@@ -234,7 +233,7 @@ let g:which_key_map.g = {
     \'j': ['<Plug>(coc-git-nextchunk)', 'next hunk'],
     \'k': ['<Plug>(coc-git-prevchunk)', 'previous hunk'],
     \'l': ['BCommits', 'list of commits'],
-    \'r': [":exe 'Git reset -p'", 'unstage (reset) hunk'],
+    \'r': [":exe 'Git reset -p'", 'unstage (reset) hunks'],
     \'s': [":call CocAction('runCommand', 'git.chunkStage')", 'stage hunk'],
     \'t': [":call CocAction('runCommand', 'git.toggleGutters')", 'toggle gutters'],
     \'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo hunk'],
@@ -284,7 +283,8 @@ let g:which_key_map.z = {
 runtime macros/sandwich/keymap/surround.vim
 
 "  general bindings
-map <F1> :w <CR>
+noremap <F1> :w<CR>
+inoremap <F1> <esc>:w<CR>
 nnoremap Y y$
 nmap <Tab> :bn<CR>
 nmap <S-Tab> :bp<CR>
@@ -316,8 +316,12 @@ iabbrev break;; # --------------------------------------------------------------
 iabbrev current;; from nose.plugins.attrib import attr
             \<CR>@attr('current')
 
-"  help
-" ------
+" ------------
+"  cheatsheet
+" ------------
+"  fugitive
+" ~    the tilde will go back in time thru revisions on the current line in a Gblame
+
 "  vim-commentary
 " [count]gc{motion}     comment or uncomment lines that {motion} moves over
 " [count]gcc            comment or uncomment [count] lines
