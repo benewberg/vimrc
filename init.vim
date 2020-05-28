@@ -194,6 +194,7 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 "  single
 let g:which_key_map[':'] = [':e ~/dotfiles/nvim/init.vim', 'open init']
 let g:which_key_map[';'] = [':so ~/dotfiles/nvim/init.vim', 'source init']
+let g:which_key_map['h'] = ['Helptags', 'help']
 
 "  buffers
 let g:which_key_map.b = {
@@ -219,6 +220,7 @@ let g:which_key_map.c = {
 let g:which_key_map.f = {
     \'name': '+find',
     \'f': ["Files", 'files'],
+    \'l': ["Lines", 'lines'],
     \'r': ["Rg", 'rg'],
     \}
 
