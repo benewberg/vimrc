@@ -19,7 +19,6 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'machakann/vim-sandwich'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
-Plug 'machakann/vim-highlightedyank'
 Plug 'voldikss/vim-floaterm'
 
 call plug#end()
@@ -116,6 +115,7 @@ let g:coc_global_extensions = [
     \'coc-git',
     \'coc-pairs',
     \'coc-lists',
+    \'coc-yank',
     \]
 
 "  lightline
