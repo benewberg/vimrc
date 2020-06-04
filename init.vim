@@ -220,7 +220,7 @@ let g:which_key_map.f = {
 let g:which_key_map.g = {
     \'name': '+git',
     \'b': [':Git blame', 'blame'],
-    \'c': [':Git commit -v', 'commit'],
+    \'c': [':Git commit', 'commit'],
     \'d': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
     \'g': ['Git', 'git status'],
     \'i': ['<Plug>(coc-git-chunkinfo)', 'hunk info'],
