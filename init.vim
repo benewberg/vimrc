@@ -195,20 +195,7 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 let g:which_key_map[':'] = [':e ~/dotfiles/nvim/init.vim', 'open init']
 let g:which_key_map[';'] = [':so ~/dotfiles/nvim/init.vim', 'source init']
 let g:which_key_map['h'] = ['Helptags', 'help']
-let g:which_key_map['T'] = ['FloatermNew', 'terminal']
-
-"  buffers
-let g:which_key_map.b = {
-    \'name': '+buffers',
-    \'d': [':bd', 'delete'],
-    \'l': ["Buffers", 'list'],
-    \'m': ["History", 'mru'],
-    \'s': {
-        \'name': '+sessions',
-        \'l': [":exe 'CocList -N sessions'", 'list'],
-        \'s': [":call CocAction('runCommand', 'session.save')", 'save'],
-        \}
-    \}
+let g:which_key_map['q'] = [':bd', 'delete buffer']
 
 "  change dir
 let g:which_key_map.c = {
@@ -220,12 +207,12 @@ let g:which_key_map.c = {
     \'p': [':cd $PATH_PROG_PYTHON', 'python'],
     \'q': [':cd $PATH_PROG_QT', 'Qt'],
     \'r': [':cd $PATH_PROG_R', 'R'],
+    \'~': [':cd ~', 'home'],
     \}
 
-"  fuzzy finding
+"  find
 let g:which_key_map.f = {
     \'name': '+find',
-    \'f': ["Files", 'files'],
     \'l': ["Lines", 'lines'],
     \'r': ["Rg", 'rg'],
     \}
@@ -233,15 +220,15 @@ let g:which_key_map.f = {
 "  git
 let g:which_key_map.g = {
     \'name': '+git',
-    \'b': [':Gblame', 'blame'],
-    \'c': [':Gcommit', 'commit'],
+    \'b': [':Git blame', 'blame'],
+    \'c': [':Git commit', 'commit'],
     \'d': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
     \'g': ['Git', 'git status'],
     \'i': ['<Plug>(coc-git-chunkinfo)', 'hunk info'],
     \'j': ['<Plug>(coc-git-nextchunk)', 'next hunk'],
     \'k': ['<Plug>(coc-git-prevchunk)', 'previous hunk'],
     \'l': ['BCommits', 'list of commits'],
-    \'r': [":exe 'Git reset -p'", 'unstage (reset) hunks'],
+    \'r': [":Git reset -p", 'unstage (reset) hunks'],
     \'s': [":call CocAction('runCommand', 'git.chunkStage')", 'stage hunk'],
     \'t': [":call CocAction('runCommand', 'git.toggleGutters')", 'toggle gutters'],
     \'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo hunk'],
@@ -255,6 +242,24 @@ let g:which_key_map.j = {
     \'r': ['<Plug>(coc-references)', 'references'],
     \}
 
+"  nosetests
+let g:which_key_map.n = {
+    \'name': '+tests',
+    \'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
+    \'d': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
+    \'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
+    \'v': [":call _FloatermPathCmd('ntcov', '%')", "file coverage"],
+    \}
+
+"  open
+let g:which_key_map.o = {
+    \'name': '+buffers',
+    \'b': ["Buffers", 'buffers'],
+    \'f': ["Files", 'files'],
+    \'h': ["History", 'history'],
+    \'s': [":exe 'CocList -N sessions'", 'session'],
+    \}
+
 "  refactor
 let g:which_key_map.r = {
     \'name': '+refactor',
@@ -263,12 +268,13 @@ let g:which_key_map.r = {
     \'r': ['<Plug>(coc-rename)', 'rename'],
     \}
 
-"  tests
+"  terminal
 let g:which_key_map.t = {
-    \'name': '+tests',
-    \'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
-    \'d': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
-    \'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
+    \'name': '+terminal',
+    \'h': [":FloatermHide", "hide"],
+    \'k': [":FloatermKill", "kill"],
+    \'o': [":FloatermNew", "open new"],
+    \'s': [":FloatermShow", "show"],
     \}
 
 "  misc
@@ -276,7 +282,8 @@ let g:which_key_map.z = {
     \'name': '+misc',
     \'<': [":set nonumber norelativenumber nolist | :exe 'IndentLinesDisable'", 'ed state off'],
     \'>': [":set number relativenumber list | :exe 'IndentLinesEnable'", 'ed state on'],
-    \'/': [":let @/=''", 'no highlights']
+    \'/': [":let @/=''", 'no highlights'],
+    \'s': [":call CocAction('runCommand', 'session.save')", 'save session'],
     \}
 
 "  vim-sandwich
