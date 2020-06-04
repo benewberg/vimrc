@@ -148,7 +148,7 @@ function! LightlineCurrentDirectory() abort
 endfunction
 
 "  indentLine
-let g:indentLine_char = '┆'
+let g:indentLine_char = ''
 
 "  ayu
 set termguicolors
