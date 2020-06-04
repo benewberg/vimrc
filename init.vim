@@ -14,7 +14,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'ayu-theme/ayu-vim'
-Plug 'rhysd/committia.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'machakann/vim-sandwich'
 Plug 'justinmk/vim-sneak'
@@ -221,7 +220,7 @@ let g:which_key_map.f = {
 let g:which_key_map.g = {
     \'name': '+git',
     \'b': [':Git blame', 'blame'],
-    \'c': [':Git commit', 'commit'],
+    \'c': [':Git commit -v', 'commit'],
     \'d': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
     \'g': ['Git', 'git status'],
     \'i': ['<Plug>(coc-git-chunkinfo)', 'hunk info'],
