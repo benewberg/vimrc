@@ -195,6 +195,7 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 let g:which_key_map[':'] = [':e ~/dotfiles/nvim/init.vim', 'open init']
 let g:which_key_map[';'] = [':so ~/dotfiles/nvim/init.vim', 'source init']
 let g:which_key_map['h'] = ['Helptags', 'help']
+let g:which_key_map['T'] = ['FloatermNew', 'terminal']
 
 "  buffers
 let g:which_key_map.b = {
@@ -202,6 +203,11 @@ let g:which_key_map.b = {
     \'d': [':bd', 'delete'],
     \'l': ["Buffers", 'list'],
     \'m': ["History", 'mru'],
+    \'s': {
+        \'name': '+sessions',
+        \'l': [":exe 'CocList -N sessions'", 'list'],
+        \'s': [":call CocAction('runCommand', 'session.save')", 'save'],
+        \}
     \}
 
 "  change dir
@@ -255,13 +261,6 @@ let g:which_key_map.r = {
     \'f': [":call CocAction('format')", 'format file'],
     \'l': [":call CocAction('runCommand', 'python.enableLinting')", 'linting'],
     \'r': ['<Plug>(coc-rename)', 'rename'],
-    \}
-
-"  sessions
-let g:which_key_map.s = {
-    \'name': '+sessions',
-    \'l': [":exe 'CocList -N sessions'", 'list'],
-    \'s': [":call CocAction('runCommand', 'session.save')", 'save'],
     \}
 
 "  tests
