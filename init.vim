@@ -124,7 +124,7 @@ let g:lightline.active = {'left': [['mode', 'paste'], ['gitbranch', 'readonly', 
                          \'right': [['lineinfo'], ['percent'], ['cwd']]}
 let g:lightline.colorscheme = 'ayu_mirage'
 let g:lightline.component = {'lineinfo': ' %3l:%-2v'}
-let g:lightline.component_function = {'readonly': 'LghtlineReadonly', 'gitbranch': 'LightlineFugitive',
+let g:lightline.component_function = {'readonly': 'LightlineReadonly', 'gitbranch': 'LightlineFugitive',
                                      \'cwd': 'LightlineCurrentDirectory'}
 let g:lightline.separator = { 'left': '', 'right': '' }
 let g:lightline.subseparator = {'left': '', 'right': '' }
