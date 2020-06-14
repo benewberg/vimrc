@@ -163,7 +163,6 @@ set timeoutlen=1000
 
 "  vim-sneak
 let g:sneak#label = 1  " for a lighter-weight easymotion feel
-highlight Sneak guifg=#212733 guibg=#FFC44C ctermfg=black ctermbg=cyan
 
 "  incsearch
 set hlsearch
@@ -252,7 +251,7 @@ let g:which_key_map.n = {
 
 "  open
 let g:which_key_map.o = {
-    \'name': '+buffers',
+    \'name': '+open',
     \'b': ["Buffers", 'buffers'],
     \'f': ["Files", 'files'],
     \'h': ["History", 'history'],
@@ -328,6 +327,11 @@ iabbrev current;; from nose.plugins.attrib import attr
 " ------------
 "  fugitive
 " ~    the tilde will go back in time thru revisions on the current line in a Gblame
+" (how to stage hunks at a fine grain level) --> 1. use :Git to show status
+"                                                2. type dd on the unstaged file
+"                                                3. go to the bottom or right split and type dp on lines to stage
+"                                                4. in the middle split delete any lines you don't want to stage that got added in 3
+"                                                5. :wq
 
 "  vim-commentary
 " [count]gc{motion}     comment or uncomment lines that {motion} moves over
