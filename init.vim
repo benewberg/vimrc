@@ -9,7 +9,7 @@ Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
-Plug 'mengelbrecht/lightline-bufferline' | Plug 'benewberg/lightline.vim'  " fork for slightly modified ayu_mirage colors
+" Plug 'mengelbrecht/lightline-bufferline' | Plug 'benewberg/lightline.vim'  " fork for slightly modified ayu_mirage colors
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
@@ -106,6 +106,13 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
+"  ayu
+set termguicolors
+let ayucolor='mirage'
+colorscheme ayu
+" make the line numbers more visible (must be called after colorscheme)
+hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
 " Extension settings
 let g:coc_global_extensions = [
     \'coc-python',
@@ -115,44 +122,127 @@ let g:coc_global_extensions = [
     \'coc-yank',
     \]
 
-"  lightline
-set showtabline=2  " force the tabline to always show
-let g:lightline = {}
-let g:lightline.active = {'left': [['mode', 'paste'], ['gitbranch', 'readonly', 'modified']],
-                         \'right': [['lineinfo'], ['percent'], ['cwd']]}
-let g:lightline.colorscheme = 'ayu_mirage'
-let g:lightline.component = {'lineinfo': ' %3l:%-2v'}
-let g:lightline.component_function = {'readonly': 'LightlineReadonly', 'gitbranch': 'LightlineFugitive',
-                                     \'cwd': 'LightlineCurrentDirectory'}
-let g:lightline.separator = { 'left': '', 'right': '' }
-let g:lightline.subseparator = {'left': '', 'right': '' }
-let g:lightline.tabline = {'left': [['buffers']], 'right': [['close']]}
-let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-let g:lightline.component_type = {'buffers': 'tabsel'}
-let g:lightline#bufferline#filename_modifier = ':t'  " show only file name
-function! LightlineReadonly()
-    return &readonly ? '' : ''
+"  statusline
+set laststatus=2
+set statusline=
+set statusline+=%#NormalColorText#%{(mode()=='n')?g:currentmode[mode()]:''}
+set statusline+=%#InsertColorText#%{(mode()=='i')?g:currentmode[mode()]:''}
+set statusline+=%#VisualColorText#%{(IsVisualMode())?g:currentmode[mode()]:''}
+set statusline+=%#ReplaceColorText#%{(mode()=='R')?g:currentmode[mode()]:''}
+set statusline+=%1*
+set statusline+=%{b:gitbranch}
+set statusline+=%{StatuslineReadonly()}
+set statusline+=%m
+set statusline+=%=
+set statusline+=%{StatuslineCurrentDirectory()}
+set statusline+=%2*
+set statusline+=\  
+set statusline+=%{StatuslinePercentOfFile()}
+set statusline+=\  
+set statusline+=%3*
+set statusline+=\  
+set statusline+=%3l:%-2v
+hi User1 guibg=#272d38 guifg=#d9d7ce
+hi User2 guibg=darkgray guifg=#212733
+hi User3 guibg=lightgray guifg=#212733
+hi NormalColorText guibg=#bbe67e guifg=#212733
+hi InsertColorText guibg=#80d4ff guifg=#212733
+hi VisualColorText guibg=#ffae57 guifg=#212733
+hi ReplaceColorText guibg=#f07178 guifg=#212733
+
+let g:currentmode={
+      \ 'n': '  NORMAL ',
+      \ 'no': '  N-OPERATOR PENDING ',
+      \ 'v': '  VISUAL ',
+      \ 'V': '  V-LINE ',
+      \ '': '  V-BLOCK ',
+      \ 's': 'Select ',
+      \ 'S': 'S·Line ',
+      \ '\<C-S>': 'S·Block ',
+      \ 'i': '  INSERT ',
+      \ 'R': '  REPLACE ',
+      \ 'Rv': 'V·Replace ',
+      \ 'c': 'Command ',
+      \ 'cv': 'Vim Ex ',
+      \ 'ce': 'Ex ',
+      \ 'r': 'Prompt ',
+      \ 'rm': 'More ',
+      \ 'r?': 'Confirm ',
+      \ '!': 'Shell ',
+      \ 't': 'Terminal '
+      \}
+
+function! IsVisualMode()
+  return (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# '  V-BLOCK ')
 endfunction
-function! LightlineFugitive()
-    if exists('*FugitiveHead')
-        let branch = FugitiveHead()
-        return branch !=# '' ? ' '.branch : ''
-    endif
+
+function! StatuslineGitBranch()
+  let b:gitbranch=""
+  if &modifiable
+    try
+      let l:dir=expand('%:p:h')
+      let l:gitrevparse = system("git -C ".l:dir." rev-parse --abbrev-ref HEAD")
+      if !v:shell_error
+        let b:gitbranch="   ".substitute(l:gitrevparse, '\n', '', 'g')." "
+      endif
+    catch
+    endtry
+  endif
+endfunction
+
+function! StatuslineReadonly()
+  if &readonly || !&modifiable
+    return ''
+  else
     return ''
 endfunction
-function! LightlineCurrentDirectory() abort
-    return getcwd()
+
+function! StatuslineCurrentDirectory() abort
+  return getcwd()." "
 endfunction
+
+function! StatuslinePercentOfFile()
+  let current = line('.') + 0.0
+  let total = line('$') + 0.0
+  return printf('%.0f%%', (current / total) * 100)
+endfunction
+
+augroup GetGitBranch
+  autocmd!
+  autocmd VimEnter,WinEnter,BufEnter * call StatuslineGitBranch()
+augroup END
+
+"  lightline
+" set showtabline=2  " force the tabline to always show
+" let g:lightline = {}
+" let g:lightline.active = {'left': [['mode', 'paste'], ['gitbranch', 'readonly', 'modified']],
+"                          \'right': [['lineinfo'], ['percent'], ['cwd']]}
+" let g:lightline.colorscheme = 'ayu_mirage'
+" let g:lightline.component = {'lineinfo': ' %3l:%-2v'}
+" let g:lightline.component_function = {'readonly': 'LightlineReadonly', 'gitbranch': 'LightlineFugitive',
+"                                      \'cwd': 'LightlineCurrentDirectory'}
+" let g:lightline.separator = { 'left': '', 'right': '' }
+" let g:lightline.subseparator = {'left': '', 'right': '' }
+" let g:lightline.tabline = {'left': [['buffers']], 'right': [['close']]}
+" let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+" let g:lightline.component_type = {'buffers': 'tabsel'}
+" let g:lightline#bufferline#filename_modifier = ':t'  " show only file name
+" function! LightlineReadonly()
+"     return &readonly ? '' : ''
+" endfunction
+" function! LightlineFugitive()
+"     if exists('*FugitiveHead')
+"         let branch = FugitiveHead()
+"         return branch !=# '' ? ' '.branch : ''
+"     endif
+"     return ''
+" endfunction
+" function! LightlineCurrentDirectory() abort
+"     return getcwd()
+" endfunction
 
 "  indentLine
 let g:indentLine_char = ''
-
-"  ayu
-set termguicolors
-let ayucolor='mirage'
-colorscheme ayu
-" make the line numbers more visible (must be called after colorscheme)
-hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
 "  WhichKey
 let g:which_key_map = {}
