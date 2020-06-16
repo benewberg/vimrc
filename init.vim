@@ -9,7 +9,6 @@ Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
-" Plug 'mengelbrecht/lightline-bufferline' | Plug 'benewberg/lightline.vim'  " fork for slightly modified ayu_mirage colors
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
@@ -130,7 +129,7 @@ set statusline+=%#InsertColorText#%{(mode()=='i')?g:currentmode[mode()]:''}
 set statusline+=%#VisualColorText#%{(IsVisualMode())?g:currentmode[mode()]:''}
 set statusline+=%#ReplaceColorText#%{(mode()=='R')?g:currentmode[mode()]:''}
 set statusline+=%1*
-set statusline+=%{b:gitbranch}
+set statusline+=%{StatuslineGitBranch()}
 set statusline+=%{StatuslineReadonly()}
 set statusline+=%m
 set statusline+=%=
@@ -177,17 +176,11 @@ function! IsVisualMode()
 endfunction
 
 function! StatuslineGitBranch()
-  let b:gitbranch=""
-  if &modifiable
-    try
-      let l:dir=expand('%:p:h')
-      let l:gitrevparse = system("git -C ".l:dir." rev-parse --abbrev-ref HEAD")
-      if !v:shell_error
-        let b:gitbranch="   ".substitute(l:gitrevparse, '\n', '', 'g')." "
-      endif
-    catch
-    endtry
+  if exists('*FugitiveHead')
+    let branch = FugitiveHead()
+    return branch !=# '' ? '   '.branch : ''
   endif
+  return = ''
 endfunction
 
 function! StatuslineReadonly()
@@ -211,35 +204,6 @@ augroup GetGitBranch
   autocmd!
   autocmd VimEnter,WinEnter,BufEnter * call StatuslineGitBranch()
 augroup END
-
-"  lightline
-" set showtabline=2  " force the tabline to always show
-" let g:lightline = {}
-" let g:lightline.active = {'left': [['mode', 'paste'], ['gitbranch', 'readonly', 'modified']],
-"                          \'right': [['lineinfo'], ['percent'], ['cwd']]}
-" let g:lightline.colorscheme = 'ayu_mirage'
-" let g:lightline.component = {'lineinfo': ' %3l:%-2v'}
-" let g:lightline.component_function = {'readonly': 'LightlineReadonly', 'gitbranch': 'LightlineFugitive',
-"                                      \'cwd': 'LightlineCurrentDirectory'}
-" let g:lightline.separator = { 'left': '', 'right': '' }
-" let g:lightline.subseparator = {'left': '', 'right': '' }
-" let g:lightline.tabline = {'left': [['buffers']], 'right': [['close']]}
-" let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-" let g:lightline.component_type = {'buffers': 'tabsel'}
-" let g:lightline#bufferline#filename_modifier = ':t'  " show only file name
-" function! LightlineReadonly()
-"     return &readonly ? '' : ''
-" endfunction
-" function! LightlineFugitive()
-"     if exists('*FugitiveHead')
-"         let branch = FugitiveHead()
-"         return branch !=# '' ? ' '.branch : ''
-"     endif
-"     return ''
-" endfunction
-" function! LightlineCurrentDirectory() abort
-"     return getcwd()
-" endfunction
 
 "  indentLine
 let g:indentLine_char = ''
