@@ -28,7 +28,7 @@ call plug#end()
 set mouse=a
 set ignorecase
 set cursorline
-set colorcolumn=101
+set colorcolumn=100
 set textwidth=100
 set formatoptions-=t
 set expandtab tabstop=4 shiftwidth=4 smarttab
@@ -317,8 +317,8 @@ autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new
 " ---------------
 "  custom abbrev
 " ---------------
-iabbrev lbreak;; # ---------------------------------------------------------------------------------------------------
-iabbrev break;; # -----------------------------------------------------------------------------------------------
+iabbrev lbreak;; # --------------------------------------------------------------------------------------------------
+iabbrev break;; # ----------------------------------------------------------------------------------------------
 iabbrev current;; from nose.plugins.attrib import attr
             \<CR>@attr('current')
 
