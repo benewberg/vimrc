@@ -192,6 +192,7 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 "  single
 let g:which_key_map[':'] = [':e ~/dotfiles/nvim/init.vim', 'open init']
 let g:which_key_map[';'] = [':so ~/dotfiles/nvim/init.vim', 'source init']
+let g:which_key_map['b'] = ["Buffers", 'buffers']
 let g:which_key_map['h'] = ['Helptags', 'help']
 let g:which_key_map['q'] = [':bd', 'delete buffer']
 
@@ -252,7 +253,6 @@ let g:which_key_map.n = {
 "  open
 let g:which_key_map.o = {
     \'name': '+open',
-    \'b': ["Buffers", 'buffers'],
     \'f': ["Files", 'files'],
     \'h': ["History", 'history'],
     \'s': [":exe 'CocList -N sessions'", 'session'],
