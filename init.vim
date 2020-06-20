@@ -121,7 +121,7 @@ let g:coc_global_extensions = [
     \'coc-yank',
     \]
 
-"  statusline
+"  custom statusline -- make sure colorscheme is set before this
 set laststatus=2
 set statusline=
 set statusline+=%#NormalColorText#%{(mode()=='n')?g:currentmode[mode()]:''}
