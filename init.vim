@@ -18,6 +18,7 @@ Plug 'machakann/vim-sandwich'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
 Plug 'voldikss/vim-floaterm'
+Plug 'pechorin/any-jump.vim'
 
 call plug#end()
 
@@ -209,6 +210,10 @@ augroup END
 "  indentLine
 let g:indentLine_char = ''
 
+"  any-jump
+let g:any_jump_disable_default_keybindings = 1
+let g:any_jump_window_style_minimal = 1
+
 "  WhichKey
 let g:which_key_map = {}
 call which_key#register('<Space>', "g:which_key_map")
@@ -287,7 +292,9 @@ let g:which_key_map.g = {
 "  jump to
 let g:which_key_map.j = {
     \'name': '+jump',
+    \'b': ['AnyJumpBack', 'jump back'],
     \'d': ['<Plug>(coc-definition)', 'definition'],
+    \'j': ['AnyJump', 'jump'],
     \'p': [":call CocAction('doHover')", 'peek'],
     \'r': ['<Plug>(coc-references)', 'references'],
     \}
