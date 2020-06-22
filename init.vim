@@ -22,7 +22,7 @@ Plug 'machakann/vim-sandwich'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
 Plug 'voldikss/vim-floaterm'
-Plug 'pechorin/any-jump.vim'
+Plug 'benewberg/any-jump.vim'  " Plug 'pechorin/any-jump.vim'
 
 call plug#end()
 
