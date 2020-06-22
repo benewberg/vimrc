@@ -112,7 +112,6 @@ let g:coc_global_extensions = [
     \'coc-json',
     \'coc-git',
     \'coc-pairs',
-    \'coc-lists',
     \'coc-yank',
     \]
 
@@ -252,7 +251,6 @@ let g:which_key_map.o = {
     \'name': '+open',
     \'f': ["Files", 'files'],
     \'h': ["History", 'history'],
-    \'s': [":exe 'CocList -N sessions'", 'session'],
     \}
 
 "  refactor
@@ -278,7 +276,6 @@ let g:which_key_map.z = {
     \'<': [":set nonumber norelativenumber nolist | :exe 'IndentLinesDisable'", 'ed state off'],
     \'>': [":set number relativenumber list | :exe 'IndentLinesEnable'", 'ed state on'],
     \'/': [":let @/=''", 'no highlights'],
-    \'s': [":call CocAction('runCommand', 'session.save')", 'save session'],
     \}
 
 "  vim-sandwich
