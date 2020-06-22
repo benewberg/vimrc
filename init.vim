@@ -18,15 +18,7 @@ Plug 'machakann/vim-sandwich'
 Plug 'justinmk/vim-sneak'
 Plug 'haya14busa/incsearch.vim'
 Plug 'voldikss/vim-floaterm'
-<<<<<<< HEAD
-<<<<<<< HEAD
 Plug 'benewberg/any-jump.vim'  " Plug 'pechorin/any-jump.vim'
-=======
-Plug 'pechorin/any-jump.vim'
->>>>>>> Add any-jump plugin and initial settings
-=======
-Plug 'benewberg/any-jump.vim'  " Plug 'pechorin/any-jump.vim'
->>>>>>> Add my fork of any-jump to remove line nbrs from window
 
 call plug#end()
 
@@ -301,10 +293,7 @@ let g:which_key_map.g = {
 let g:which_key_map.j = {
     \'name': '+jump',
     \'b': ['AnyJumpBack', 'jump back'],
-<<<<<<< HEAD
-=======
     \'d': ['<Plug>(coc-definition)', 'definition'],
->>>>>>> Add any-jump plugin and initial settings
     \'j': ['AnyJump', 'jump'],
     \'p': [":call CocAction('doHover')", 'peek'],
     \}
