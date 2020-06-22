@@ -109,7 +109,6 @@ augroup end
 " Extension settings
 let g:coc_global_extensions = [
     \'coc-python',
-    \'coc-snippets',
     \'coc-json',
     \'coc-git',
     \'coc-pairs',
@@ -181,8 +180,6 @@ endfunction
 "  key mappings
 " --------------
 " Change leader to space key (KEEP THIS ABOVE OTHER LEADER MAPPINGS)
-" This has to be higher in the file than any <Leader> mappings, since it resets any leader mappings
-" defined above it
 let mapleader = ' '
 
 "  WhichKey
@@ -302,7 +299,6 @@ nnoremap <C-l> <C-W><right>
 nnoremap <C-h> <C-W><left>
 
 "  incsearch
-" append 'zz' to each of these to auto-center the search on the screen
 map n  <Plug>(incsearch-nohl-n)
 map N  <Plug>(incsearch-nohl-N)
 map *  <Plug>(incsearch-nohl-*)
