@@ -150,26 +150,26 @@ hi VisualColorText guibg=#ffae57 guifg=#212733
 hi ReplaceColorText guibg=#f07178 guifg=#212733
 
 let g:currentmode={
-      \ 'n': '  NORMAL ',
-      \ 'no': '  N-OPERATOR PENDING ',
-      \ 'v': '  VISUAL ',
-      \ 'V': '  V-LINE ',
-      \ '': '  V-BLOCK ',
-      \ 's': 'Select ',
-      \ 'S': 'S·Line ',
-      \ '\<C-S>': 'S·Block ',
-      \ 'i': '  INSERT ',
-      \ 'R': '  REPLACE ',
-      \ 'Rv': 'V·Replace ',
-      \ 'c': 'Command ',
-      \ 'cv': 'Vim Ex ',
-      \ 'ce': 'Ex ',
-      \ 'r': 'Prompt ',
-      \ 'rm': 'More ',
-      \ 'r?': 'Confirm ',
-      \ '!': 'Shell ',
-      \ 't': 'Terminal '
-      \}
+    \ 'n': '  NORMAL ',
+    \ 'no': '  N-OPERATOR PENDING ',
+    \ 'v': '  VISUAL ',
+    \ 'V': '  V-LINE ',
+    \ '': '  V-BLOCK ',
+    \ 's': '  SELECT ',
+    \ 'S': '  S-LINE ',
+	\ '' : '  S-BLOCK ',
+    \ 'i': '  INSERT ',
+    \ 'R': '  REPLACE ',
+    \ 'Rv': '  V-REPLACE ',
+    \ 'c': '  COMMAND ',
+    \ 'cv': '  VIM EX ',
+    \ 'ce': '  EX ',
+    \ 'r': '  PROMPT ',
+    \ 'rm': '  MORE ',
+    \ 'r?': '  CONFIRM ',
+    \ '!': '  SHELL ',
+    \ 't': '  TERMINAL '
+    \}
 
 function! IsVisualMode()
   return (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# '  V-BLOCK ')
