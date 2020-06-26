@@ -12,7 +12,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
-Plug 'ayu-theme/ayu-vim'
+Plug 'benewberg/ayu-vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'machakann/vim-sandwich'
 Plug 'justinmk/vim-sneak'
@@ -43,6 +43,7 @@ set noshowmode  " not necessary with a statusline plugin
 set ttimeoutlen=10  " set the escape key timeout to very little
 let g:python3_host_prog="/home/ben/.virtualenvs/neovim/bin/python3"
 set updatetime=100  " make the git gutter updates show up quicker
+set showtabline=2
 
 " -----------------
 "  plugin settings
@@ -171,7 +172,7 @@ function! IsVisualMode()
 endfunction
 
 function! IsOtherMode()
-  return (!(mode() =~# '\v(n|no|v|V|R|Rv|i)') && !(IsVisualMode()))
+  return (!(mode() =~# '\v(n|no|v|V|R|i)') && !(IsVisualMode()))
 endfunction
 
 function! StatuslineGitBranch()
