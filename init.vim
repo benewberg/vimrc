@@ -128,22 +128,17 @@ set statusline+=%#NormalColorText#%{(mode()=='n')?g:currentmode[mode()]:''}
 set statusline+=%#InsertColorText#%{(mode()=='i')?g:currentmode[mode()]:''}
 set statusline+=%#VisualColorText#%{(IsVisualMode())?g:currentmode[mode()]:''}
 set statusline+=%#ReplaceColorText#%{(mode()=='R')?g:currentmode[mode()]:''}
-set statusline+=%1*
+set statusline+=%#NormalColorText#%{(IsOtherMode())?g:currentmode[mode()]:''}
+set statusline+=%#Directory#
 set statusline+=%{StatuslineGitBranch()}
 set statusline+=%{StatuslineReadonly()}
 set statusline+=%m
 set statusline+=%=
 set statusline+=%{StatuslineCurrentDirectory()}
-set statusline+=%2*
-set statusline+=\  
+set statusline+=%#Pmenu#
 set statusline+=%{StatuslinePercentOfFile()}
-set statusline+=\  
-set statusline+=%3*
-set statusline+=\  
-set statusline+=%3l:%-2v
-hi User1 guibg=#272d38 guifg=#d9d7ce
-hi User2 guibg=darkgray guifg=#212733
-hi User3 guibg=lightgray guifg=#212733
+set statusline+=%#TabLine#
+set statusline+=\ %3l:%-2v
 hi NormalColorText guibg=#bbe67e guifg=#212733
 hi InsertColorText guibg=#80d4ff guifg=#212733
 hi VisualColorText guibg=#ffae57 guifg=#212733
@@ -175,6 +170,10 @@ function! IsVisualMode()
   return (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# '  V-BLOCK ')
 endfunction
 
+function! IsOtherMode()
+  return (!(mode() =~# '\v(n|no|v|V|R|Rv|i)') && !(IsVisualMode()))
+endfunction
+
 function! StatuslineGitBranch()
   if exists('*FugitiveHead')
     let branch = FugitiveHead()
@@ -197,7 +196,7 @@ endfunction
 function! StatuslinePercentOfFile()
   let current = line('.') + 0.0
   let total = line('$') + 0.0
-  return printf('%.0f%%', (current / total) * 100)
+  return printf('  %.0f%% ', (current / total) * 100)
 endfunction
 
 augroup GetGitBranch
