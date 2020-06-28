@@ -140,10 +140,10 @@ set statusline+=%#Pmenu#
 set statusline+=%{StatuslinePercentOfFile()}
 set statusline+=%#TabLine#
 set statusline+=\ %3l:%-2v
-hi NormalColorText guibg=#bbe67e guifg=#212733
-hi InsertColorText guibg=#80d4ff guifg=#212733
-hi VisualColorText guibg=#ffae57 guifg=#212733
-hi ReplaceColorText guibg=#f07178 guifg=#212733
+hi NormalColorText guibg=#bbe67e guifg=#212733 gui=BOLD
+hi InsertColorText guibg=#80d4ff guifg=#212733 gui=BOLD
+hi VisualColorText guibg=#ffae57 guifg=#212733 gui=BOLD
+hi ReplaceColorText guibg=#f07178 guifg=#212733 gui=BOLD
 
 let g:currentmode={
     \ 'n': '  NORMAL ',
@@ -340,8 +340,8 @@ runtime macros/sandwich/keymap/surround.vim
 noremap <F1> :w<CR>
 inoremap <F1> <esc>:w<CR>
 nnoremap Y y$
-nmap <Tab> :bn<CR>
-nmap <S-Tab> :bp<CR>
+nmap <Tab> <C-^><CR>
+nmap <S-Tab> :bn<CR>
 
 "  split navigation
 nnoremap <C-j> <C-W><down>
