@@ -39,7 +39,7 @@ set hidden  " allow to switch buffers without saving
 set nostartofline  " don't move cursor to start of line when switching buffers
 set inccommand=nosplit  " visually show live substitutions
 set clipboard=unnamedplus
-set noshowmode  " not necessary with a statusline plugin
+set noshowmode  " not necessary with a statusline set
 set ttimeoutlen=10  " set the escape key timeout to very little
 let g:python3_host_prog="/home/ben/.virtualenvs/neovim/bin/python3"
 set updatetime=100  " make the git gutter updates show up quicker
@@ -130,10 +130,11 @@ set statusline+=%#InsertColorText#%{(mode()=='i')?g:currentmode[mode()]:''}
 set statusline+=%#VisualColorText#%{(IsVisualMode())?g:currentmode[mode()]:''}
 set statusline+=%#ReplaceColorText#%{(mode()=='R')?g:currentmode[mode()]:''}
 set statusline+=%#NormalColorText#%{(IsOtherMode())?g:currentmode[mode()]:''}
-set statusline+=%#Directory#
+set statusline+=%#DiffAdd#
 set statusline+=%{StatuslineGitBranch()}
 set statusline+=%{StatuslineReadonly()}
-set statusline+=%m
+set statusline+=\ %m
+set statusline+=%#Directory#
 set statusline+=%=
 set statusline+=%{StatuslineCurrentDirectory()}
 set statusline+=%#Pmenu#
@@ -185,7 +186,7 @@ endfunction
 
 function! StatuslineReadonly()
   if &readonly || !&modifiable
-    return ''
+    return '    '
   else
     return ''
 endfunction
@@ -382,8 +383,8 @@ iabbrev current;; from nose.plugins.attrib import attr
 " ~    the tilde will go back in time thru revisions on the current line in a Gblame
 " (how to stage hunks at a fine grain level) --> 1. use :Git to show status
 "                                                2. type dd on the unstaged file
-"                                                3. go to the bottom or right split and type dp on lines to stage
-"                                                4. in the middle split delete any lines you don't want to stage that got added in 3
+"                                                3. go to the bottom or right split and type dp on the line(s) to stage
+"                                                4. in the middle split, delete any lines you don't want to stage that got added in step 3
 "                                                5. :wq
 
 "  vim-commentary
