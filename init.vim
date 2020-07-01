@@ -43,7 +43,6 @@ set noshowmode  " not necessary with a statusline set
 set ttimeoutlen=10  " set the escape key timeout to very little
 let g:python3_host_prog="/home/ben/.virtualenvs/neovim/bin/python3"
 set updatetime=100  " make the git gutter updates show up quicker
-set showtabline=2
 
 " -----------------
 "  plugin settings
@@ -123,6 +122,7 @@ let g:coc_global_extensions = [
     \]
 
 "  custom statusline -- make sure colorscheme is set before this
+set showtabline=2
 set laststatus=2
 set statusline=
 set statusline+=%#NormalColorText#%{(mode()=='n')?g:currentmode[mode()]:''}
