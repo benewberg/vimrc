@@ -237,15 +237,6 @@ let g:which_key_map.j = {
     \'r': ['<Plug>(coc-references)', 'references'],
     \}
 
-"  nosetests
-let g:which_key_map.n = {
-    \'name': '+tests',
-    \'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
-    \'d': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
-    \'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
-    \'v': [":call _FloatermPathCmd('ntcov', '%')", "file coverage"],
-    \}
-
 "  open
 let g:which_key_map.o = {
     \'name': '+open',
@@ -261,8 +252,17 @@ let g:which_key_map.r = {
     \'r': ['<Plug>(coc-rename)', 'rename'],
     \}
 
-"  terminal
+"  tests
 let g:which_key_map.t = {
+    \'name': '+tests',
+    \'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
+    \'d': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
+    \'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
+    \'v': [":call _FloatermPathCmd('ntcov', '%')", "file coverage"],
+    \}
+
+"  terminal
+let g:which_key_map.T = {
     \'name': '+terminal',
     \'h': [":FloatermHide", "hide"],
     \'k': [":FloatermKill", "kill"],
