@@ -306,6 +306,12 @@ map #  <Plug>(incsearch-nohl-#)
 " -----------------
 autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
+autocmd VimEnter * :call OpenHistory()
+function! OpenHistory()
+    if @% == ""
+        History
+    endif
+endfunction
 
 " ---------------
 "  custom abbrev
