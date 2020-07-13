@@ -294,6 +294,7 @@ let g:which_key_map.j = {
     \'name': '+jump',
     \'b': ['AnyJumpBack', 'jump back'],
     \'j': ['AnyJump', 'jump'],
+    \'l': ['AnyJumpLastResults', 'jump last'],
     \'p': [":call CocAction('doHover')", 'peek'],
     \}
 
