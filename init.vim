@@ -297,15 +297,6 @@ let g:which_key_map.j = {
     \'p': [":call CocAction('doHover')", 'peek'],
     \}
 
-"  nosetests
-let g:which_key_map.n = {
-    \'name': '+tests',
-    \'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
-    \'d': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
-    \'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
-    \'v': [":call _FloatermPathCmd('ntcov', '%')", "file coverage"],
-    \}
-
 "  open
 let g:which_key_map.o = {
     \'name': '+open',
@@ -321,8 +312,17 @@ let g:which_key_map.r = {
     \'r': ['<Plug>(coc-rename)', 'rename'],
     \}
 
-"  terminal
+"  tests
 let g:which_key_map.t = {
+    \'name': '+tests',
+    \'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
+    \'d': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
+    \'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
+    \'v': [":call _FloatermPathCmd('ntcov', '%')", "file coverage"],
+    \}
+
+"  terminal
+let g:which_key_map.T = {
     \'name': '+terminal',
     \'h': [":FloatermHide", "hide"],
     \'k': [":FloatermKill", "kill"],
@@ -366,6 +366,12 @@ map #  <Plug>(incsearch-nohl-#)
 " -----------------
 autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
+autocmd VimEnter * :call OpenHistory()
+function! OpenHistory()
+    if @% == ""
+        History
+    endif
+endfunction
 
 " ---------------
 "  custom abbrev
