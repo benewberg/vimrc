@@ -126,10 +126,10 @@ let g:coc_global_extensions = [
 set showtabline=2
 set laststatus=2
 set statusline=
-set statusline+=%#NormalColorText#%{(mode()=='n')?g:currentmode[mode()]:''}
-set statusline+=%#InsertColorText#%{(mode()=='i')?g:currentmode[mode()]:''}
+set statusline+=%#NormalColorText#%{(mode()==#'n')?g:currentmode[mode()]:''}
+set statusline+=%#InsertColorText#%{(mode()==#'i')?g:currentmode[mode()]:''}
 set statusline+=%#VisualColorText#%{(IsVisualMode())?g:currentmode[mode()]:''}
-set statusline+=%#ReplaceColorText#%{(mode()=='R')?g:currentmode[mode()]:''}
+set statusline+=%#ReplaceColorText#%{(mode()==#'R')?g:currentmode[mode()]:''}
 set statusline+=%#NormalColorText#%{(IsOtherMode())?g:currentmode[mode()]:''}
 set statusline+=%#DiffAdd#
 set statusline+=%{StatuslineGitBranch()}
@@ -238,8 +238,7 @@ endfunction
 " --------------
 "  key mappings
 " --------------
-" Change leader to space key (KEEP THIS ABOVE OTHER LEADER MAPPINGS)
-let mapleader = ' '
+let mapleader = ' '  " make sure this is before all other leader mappings
 
 "  WhichKey
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
@@ -367,7 +366,7 @@ map #  <Plug>(incsearch-nohl-#)
 " -----------------
 autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
-autocmd VimEnter * :call OpenHistory()
+autocmd VimEnter * :call OpenHistory()  " open the history fzf search if launching empty nvim
 function! OpenHistory()
     if @% == ""
         History
