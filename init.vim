@@ -70,6 +70,10 @@ command! -bang -nargs=* Rg
   \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
   \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
   \   <bang>0)
+command! -nargs=* -complete=dir Cd
+    \ call fzf#run(fzf#wrap({
+    \   'source': 'find .\/'.<f-args>.' -type d -follow 2>/dev/null',
+    \   'sink': 'cd'}))
 
 "  coc.nvim
 set nobackup
@@ -254,14 +258,9 @@ let g:which_key_map['q'] = [':bd', 'delete buffer']
 "  change dir
 let g:which_key_map.c = {
     \'name': '+cd',
-    \'a': [':cd $PATH_PROG_ARDUINO', 'Arduino'],
-    \'c': [':cd $PATH_PROG_CPP', 'cpp'],
-    \'d': [':cd $PATH_DROPBOX_DB', 'databases'],
-    \'h': [':cd %:p:h', 'here (this buffer)'],
-    \'p': [':cd $PATH_PROG_PYTHON', 'python'],
-    \'q': [':cd $PATH_PROG_QT', 'Qt'],
-    \'r': [':cd $PATH_PROG_R', 'R'],
-    \'~': [':cd ~', 'home'],
+    \'b': [':cd %:p:h', 'here (this buffer)'],
+    \'d': ['Cd', 'dir'],
+    \'h': [':cd ~ | Cd', 'home'],
     \}
 
 "  find
