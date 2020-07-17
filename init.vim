@@ -65,11 +65,11 @@ let g:fzf_colors = {
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --hidden --smart-case --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
-  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
-  \   <bang>0)
+    \ call fzf#vim#grep(
+    \   'rg --column --line-number --hidden --smart-case --no-heading --color=always '.shellescape(<q-args>), 1,
+    \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+    \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
+    \   <bang>0)
 command! -nargs=* -complete=dir Cd
     \ call fzf#run(fzf#wrap({
     \   'source': 'find .\/'.<f-args>.' -type d -follow 2>/dev/null',
@@ -323,10 +323,8 @@ let g:which_key_map.t = {
 "  terminal
 let g:which_key_map.T = {
     \'name': '+terminal',
-    \'h': [":FloatermHide", "hide"],
-    \'k': [":FloatermKill", "kill"],
     \'o': [":FloatermNew", "open new"],
-    \'s': [":FloatermShow", "show"],
+    \'t': [":FloatermToggle", "toggle"],
     \}
 
 "  misc
