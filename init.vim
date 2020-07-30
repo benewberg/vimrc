@@ -315,10 +315,10 @@ let g:which_key_map.r = {
 "  tests
 let g:which_key_map.t = {
   \ 'name': '+tests',
-  \ 'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
+  \ 'c': [":call _FloatermPathCmd('ntcov', '%')", "file coverage"],
   \ 'd': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
   \ 'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
-  \ 'v': [":call _FloatermPathCmd('ntcov', '%')", "file coverage"],
+  \ 't': [":call _FloatermPathCmd('ntat', '%:p')", "these"],
   \}
 
 "  terminal
@@ -376,7 +376,7 @@ endfunction
 " ---------------
 iabbrev lbreak;; # --------------------------------------------------------------------------------------------------
 iabbrev break;; # ----------------------------------------------------------------------------------------------
-iabbrev current;; from nose.plugins.attrib import attr<CR>@attr('current')
+iabbrev this;; from nose.plugins.attrib import attr<CR>@attr('this')
 
 " ------------
 "  cheatsheet
