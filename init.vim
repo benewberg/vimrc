@@ -197,7 +197,7 @@ function! StatuslineReadonly()
 endfunction
 
 function! StatuslineCurrentDirectory() abort
-  return getcwd()." "
+  return pathshorten(getcwd())." "
 endfunction
 
 function! StatuslinePercentOfFile()
