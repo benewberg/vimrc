@@ -51,29 +51,29 @@ set updatetime=100  " make the git gutter updates show up quicker
 "  fzf
 let g:fzf_layout = {'window': {'width': 0.9, 'height': 0.6}}
 let g:fzf_colors = {
-    \'fg': ['fg', 'Normal'],
-    \'hl': ['fg', 'Constant'],
-    \'fg+': ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-    \'bg+': ['bg', 'CursorLine', 'CursorColumn'],
-    \'hl+': ['fg', 'Statement'],
-    \'info': ['fg', 'PreProc'],
-    \'prompt': ['fg', 'Conditional'],
-    \'pointer': ['fg', 'Exception'],
-    \'marker': ['fg', 'Keyword'],
-    \'spinner': ['fg', 'Label'],
-    \'header': ['fg', 'Comment']}
+  \ 'fg': ['fg', 'Normal'],
+  \ 'hl': ['fg', 'Constant'],
+  \ 'fg+': ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+': ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+': ['fg', 'Statement'],
+  \ 'info': ['fg', 'PreProc'],
+  \ 'prompt': ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker': ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header': ['fg', 'Comment']}
 command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=* Rg
-    \ call fzf#vim#grep(
-    \   'rg --column --line-number --hidden --smart-case --no-heading --color=always '.shellescape(<q-args>), 1,
-    \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
-    \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
-    \   <bang>0)
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --hidden --smart-case --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4.. -e'}, 'right:50%', '?'),
+  \   <bang>0)
 command! -nargs=* -complete=dir Cd
-    \ call fzf#run(fzf#wrap({
-    \   'source': 'find .\/'.<f-args>.' -type d -follow 2>/dev/null',
-    \   'sink': 'cd'}))
+  \ call fzf#run(fzf#wrap({
+  \   'source': 'find .\/'.<f-args>.' -type d -follow 2>/dev/null',
+  \   'sink': 'cd'}))
 
 "  coc.nvim
 set nobackup
@@ -85,9 +85,9 @@ set signcolumn=yes  " always show the signcolumn, otherwise it would shift the t
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -119,12 +119,12 @@ hi LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=Dark
 
 " Extension settings
 let g:coc_global_extensions = [
-    \'coc-python',
-    \'coc-json',
-    \'coc-git',
-    \'coc-pairs',
-    \'coc-yank',
-    \]
+  \ 'coc-python',
+  \ 'coc-json',
+  \ 'coc-git',
+  \ 'coc-pairs',
+  \ 'coc-yank',
+  \]
 
 "  custom statusline -- make sure colorscheme is set before this
 set showtabline=2
@@ -152,26 +152,26 @@ hi VisualColorText guibg=#ffae57 guifg=#212733 gui=BOLD
 hi ReplaceColorText guibg=#f07178 guifg=#212733 gui=BOLD
 
 let g:currentmode={
-    \ 'n': '  NORMAL ',
-    \ 'no': '  N-OPERATOR PENDING ',
-    \ 'v': '  VISUAL ',
-    \ 'V': '  V-LINE ',
-    \ '': '  V-BLOCK ',
-    \ 's': '  SELECT ',
-    \ 'S': '  S-LINE ',
-	\ '' : '  S-BLOCK ',
-    \ 'i': '  INSERT ',
-    \ 'R': '  REPLACE ',
-    \ 'Rv': '  V-REPLACE ',
-    \ 'c': '  COMMAND ',
-    \ 'cv': '  VIM EX ',
-    \ 'ce': '  EX ',
-    \ 'r': '  PROMPT ',
-    \ 'rm': '  MORE ',
-    \ 'r?': '  CONFIRM ',
-    \ '!': '  SHELL ',
-    \ 't': '  TERMINAL '
-    \}
+  \ 'n': '  NORMAL ',
+  \ 'no': '  N-OPERATOR PENDING ',
+  \ 'v': '  VISUAL ',
+  \ 'V': '  V-LINE ',
+  \ '': '  V-BLOCK ',
+  \ 's': '  SELECT ',
+  \ 'S': '  S-LINE ',
+  \ '' : '  S-BLOCK ',
+  \ 'i': '  INSERT ',
+  \ 'R': '  REPLACE ',
+  \ 'Rv': '  V-REPLACE ',
+  \ 'c': '  COMMAND ',
+  \ 'cv': '  VIM EX ',
+  \ 'ce': '  EX ',
+  \ 'r': '  PROMPT ',
+  \ 'rm': '  MORE ',
+  \ 'r?': '  CONFIRM ',
+  \ '!': '  SHELL ',
+  \ 't': '  TERMINAL '
+  \}
 
 function! IsVisualMode()
   return (mode() =~# '\v(v|V)' || g:currentmode[mode()] ==# '  V-BLOCK ')
@@ -197,7 +197,7 @@ function! StatuslineReadonly()
 endfunction
 
 function! StatuslineCurrentDirectory() abort
-  return getcwd()." "
+  return pathshorten(getcwd())." "
 endfunction
 
 function! StatuslinePercentOfFile()
@@ -237,7 +237,7 @@ let g:floaterm_height = 0.7
 let g:floaterm_wintitle = 0
 let g:floaterm_winblend = 10
 function! _FloatermPathCmd(cmd, path)
-    call floaterm#new(a:cmd . ' ' . expand(a:path), {}, {}, v:true)
+  call floaterm#new(a:cmd . ' ' . expand(a:path), {}, {}, v:true)
 endfunction
 
 " --------------
@@ -258,83 +258,83 @@ let g:which_key_map['q'] = [':bd', 'delete buffer']
 
 "  change dir
 let g:which_key_map.c = {
-    \'name': '+cd',
-    \'b': [':cd %:p:h', 'here (this buffer)'],
-    \'d': ['Cd', 'dir'],
-    \'h': [':cd ~ | Cd', 'home'],
-    \}
+  \ 'name': '+cd',
+  \ 'b': [':cd %:p:h', 'here (this buffer)'],
+  \ 'd': ['Cd', 'dir'],
+  \ 'h': [':cd ~', 'home'],
+  \}
 
 "  find
 let g:which_key_map.f = {
-    \'name': '+find',
-    \'l': ["Lines", 'lines'],
-    \'r': ["Rg", 'rg'],
-    \}
+  \ 'name': '+find',
+  \ 'l': ["Lines", 'lines'],
+  \ 'r': ["Rg", 'rg'],
+  \}
 
 "  git
 let g:which_key_map.g = {
-    \'name': '+git',
-    \'b': [':Git blame', 'blame'],
-    \'c': [':Git commit', 'commit'],
-    \'d': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
-    \'g': ['Git', 'git status'],
-    \'i': ['<Plug>(coc-git-chunkinfo)', 'hunk info'],
-    \'j': ['<Plug>(coc-git-nextchunk)', 'next hunk'],
-    \'k': ['<Plug>(coc-git-prevchunk)', 'previous hunk'],
-    \'l': ['BCommits', 'list of commits'],
-    \'r': [":Git reset -p", 'unstage (reset) hunks'],
-    \'s': [":call CocAction('runCommand', 'git.chunkStage')", 'stage hunk'],
-    \'t': [":call CocAction('runCommand', 'git.toggleGutters')", 'toggle gutters'],
-    \'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo hunk'],
-    \}
+  \ 'name': '+git',
+  \ 'b': [':Git blame', 'blame'],
+  \ 'c': [':Git commit', 'commit'],
+  \ 'd': [":call CocAction('runCommand', 'git.showCommit')", 'commit diff'],
+  \ 'g': ['Git', 'git status'],
+  \ 'i': ['<Plug>(coc-git-chunkinfo)', 'hunk info'],
+  \ 'j': ['<Plug>(coc-git-nextchunk)', 'next hunk'],
+  \ 'k': ['<Plug>(coc-git-prevchunk)', 'previous hunk'],
+  \ 'l': ['BCommits', 'list of commits'],
+  \ 'r': [":Git reset -p", 'unstage (reset) hunks'],
+  \ 's': [":call CocAction('runCommand', 'git.chunkStage')", 'stage hunk'],
+  \ 't': [":call CocAction('runCommand', 'git.toggleGutters')", 'toggle gutters'],
+  \ 'u': [":call CocAction('runCommand', 'git.chunkUndo')", 'undo hunk'],
+  \}
 
 "  jump to
 let g:which_key_map.j = {
-    \'name': '+jump',
-    \'b': ['AnyJumpBack', 'jump back'],
-    \'j': ['AnyJump', 'jump'],
-    \'l': ['AnyJumpLastResults', 'jump last'],
-    \'p': [":call CocAction('doHover')", 'peek'],
-    \}
+  \ 'name': '+jump',
+  \ 'b': ['AnyJumpBack', 'jump back'],
+  \ 'j': ['AnyJump', 'jump'],
+  \ 'l': ['AnyJumpLastResults', 'jump last'],
+  \ 'p': [":call CocAction('doHover')", 'peek'],
+  \}
 
 "  open
 let g:which_key_map.o = {
-    \'name': '+open',
-    \'f': ["Files", 'files'],
-    \'h': ["History", 'history'],
-    \}
+  \ 'name': '+open',
+  \ 'f': ["Files", 'files'],
+  \ 'h': ["History", 'history'],
+  \}
 
 "  refactor
 let g:which_key_map.r = {
-    \'name': '+refactor',
-    \'f': [":call CocAction('format')", 'format file'],
-    \'l': [":call CocAction('runCommand', 'python.enableLinting')", 'linting'],
-    \'r': ['<Plug>(coc-rename)', 'rename'],
-    \}
+  \ 'name': '+refactor',
+  \ 'f': [":call CocAction('format')", 'format file'],
+  \ 'l': [":call CocAction('runCommand', 'python.enableLinting')", 'linting'],
+  \ 'r': ['<Plug>(coc-rename)', 'rename'],
+  \}
 
 "  tests
 let g:which_key_map.t = {
-    \'name': '+tests',
-    \'c': [":call _FloatermPathCmd('ntac', '%:p')", "marked current"],
-    \'d': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
-    \'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
-    \'v': [":call _FloatermPathCmd('ntcov', '%')", "file coverage"],
-    \}
+  \ 'name': '+tests',
+  \ 'c': [":call _FloatermPathCmd('ntcov', '%')", "file coverage"],
+  \ 'd': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
+  \ 'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
+  \ 't': [":call _FloatermPathCmd('ntat', '%:p')", "these"],
+  \}
 
 "  terminal
 let g:which_key_map.T = {
-    \'name': '+terminal',
-    \'o': [":FloatermNew", "open new"],
-    \'t': [":FloatermToggle", "toggle"],
-    \}
+  \ 'name': '+terminal',
+  \ 'o': [":FloatermNew", "open new"],
+  \ 't': [":FloatermToggle", "toggle"],
+  \}
 
 "  misc
 let g:which_key_map.z = {
-    \'name': '+misc',
-    \'<': [":set nonumber norelativenumber nolist | :exe 'IndentLinesDisable'", 'ed state off'],
-    \'>': [":set number relativenumber list | :exe 'IndentLinesEnable'", 'ed state on'],
-    \'/': [":let @/=''", 'no highlights'],
-    \}
+  \ 'name': '+misc',
+  \ '<': [":set nonumber norelativenumber nolist | :exe 'IndentLinesDisable'", 'ed state off'],
+  \ '>': [":set number relativenumber list | :exe 'IndentLinesEnable'", 'ed state on'],
+  \ '/': [":let @/=''", 'no highlights'],
+  \}
 
 "  vim-sandwich
 " use tpope's vim-surround key mappings; this allows us not to clash with vim-sneak
@@ -366,9 +366,9 @@ autocmd BufRead *sqli set ft=sql  " highlight .sqli files as sql
 autocmd BufEnter * set fo-=c fo-=r fo-=o  " stop annoying auto commenting on new lines
 autocmd VimEnter * :call OpenHistory()  " open the history fzf search if launching empty nvim
 function! OpenHistory()
-    if @% == ""
-        History
-    endif
+  if @% == ""
+    History
+  endif
 endfunction
 
 " ---------------
@@ -376,7 +376,7 @@ endfunction
 " ---------------
 iabbrev lbreak;; # --------------------------------------------------------------------------------------------------
 iabbrev break;; # ----------------------------------------------------------------------------------------------
-iabbrev current;; from nose.plugins.attrib import attr<CR>@attr('current')
+iabbrev this;; from nose.plugins.attrib import attr<CR>@attr('this')
 
 " ------------
 "  cheatsheet
