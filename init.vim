@@ -42,7 +42,7 @@ set inccommand=nosplit  " visually show live substitutions
 set clipboard=unnamedplus
 set noshowmode  " not necessary with a statusline set
 set ttimeoutlen=10  " set the escape key timeout to very little
-let g:python3_host_prog="/home/ben/.virtualenvs/neovim/bin/python3"
+let g:python3_host_prog="/home/ben/.virtualenvs/nvim/bin/python3"
 set updatetime=100  " make the git gutter updates show up quicker
 
 " -----------------
@@ -259,7 +259,7 @@ let g:which_key_map['q'] = [':bd', 'delete buffer']
 "  change dir
 let g:which_key_map.c = {
   \ 'name': '+cd',
-  \ 'b': [':cd %:p:h', 'here (this buffer)'],
+  \ 'c': [':cd %:p:h', 'current buffer'],
   \ 'd': ['Cd', 'dir'],
   \ 'h': [':cd ~', 'home'],
   \}
