@@ -384,10 +384,9 @@ iabbrev this;; from nose.plugins.attrib import attr<CR>@attr('this')
 "  fugitive
 " ~    the tilde will go back in time thru revisions on the current line in a Gblame
 " (how to stage hunks at a fine grain level) --> 1. use :Git to show status
-"                                                2. type dd on the unstaged file
-"                                                3. go to the bottom or right split and type dp on the line(s) to stage
-"                                                4. in the middle split, delete any lines you don't want to stage that got added in step 3
-"                                                5. :wq
+"                                                2. type '=' on a filename to toggle inline diff
+"                                                3. visually select the lines to stage
+"                                                4. press 's' to stage
 
 "  vim-commentary
 " [count]gc{motion}     comment or uncomment lines that {motion} moves over
