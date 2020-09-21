@@ -1,6 +1,6 @@
 {
     "http.proxyStrictSSL": false,
-    "python.pythonPath": "/home/ben/.virtualenvs/neovim/bin/python3",
+    "python.pythonPath": "/home/ben/.virtualenvs/nvim/bin/python3",
     "python.venvPath": "/home/ben/.virtualenvs",
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
