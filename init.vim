@@ -74,6 +74,10 @@ command! -nargs=* -complete=dir Cd
   \ call fzf#run(fzf#wrap({
   \   'source': 'find .\/'.<f-args>.' -type d -follow 2>/dev/null',
   \   'sink': 'cd'}))
+command! -nargs=* -complete=dir Sessions
+  \ call fzf#run(fzf#vim#with_preview(fzf#wrap({
+  \   'source': 'find ~/.local/share/nvim/session/'.<f-args>.' -type f',
+  \   'sink': 'source'})))
 
 "  coc.nvim
 set nobackup
@@ -302,6 +306,7 @@ let g:which_key_map.o = {
   \ 'name': '+open',
   \ 'f': ["Files", 'files'],
   \ 'h': ["History", 'history'],
+  \ 's': ["Sessions", 'session'],
   \}
 
 "  refactor
@@ -334,6 +339,7 @@ let g:which_key_map.z = {
   \ '<': [":set nonumber norelativenumber nolist | :exe 'IndentLinesDisable'", 'ed state off'],
   \ '>': [":set number relativenumber list | :exe 'IndentLinesEnable'", 'ed state on'],
   \ '/': [":let @/=''", 'no highlights'],
+  \ 's': [":call SaveSession()", 'save session'],
   \}
 
 "  vim-sandwich
@@ -369,6 +375,10 @@ function! OpenHistory()
   if @% == ""
     History
   endif
+endfunction
+function! SaveSession()
+  let l:name = input("Session name: ")
+  execute 'mksession! ~/.local/share/nvim/session/'.fnameescape(l:name)
 endfunction
 
 " ---------------
