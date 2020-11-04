@@ -320,7 +320,7 @@ let g:which_key_map.r = {
 "  tests
 let g:which_key_map.t = {
   \ 'name': '+tests',
-  \ 'c': [":call _FloatermPathCmd('ntcov', '%')", "file coverage"],
+  \ 'c': [":call NtCov()", "file coverage"],
   \ 'd': [":call _FloatermPathCmd('nosetests -v', '%:p:h')", "dir"],
   \ 'f': [":call _FloatermPathCmd('nosetests -v', '%:p')", "file"],
   \ 't': [":call _FloatermPathCmd('ntat', '%:p')", "these"],
@@ -379,6 +379,10 @@ endfunction
 function! SaveSession()
   let l:name = input("Session name: ")
   execute 'mksession! ~/.local/share/nvim/session/'.fnameescape(l:name)
+endfunction
+function! NtCov()
+  let cov = substitute(substitute(expand('%:p'), "test_", "", ""), "tests/", "", "")
+  execute ":FloatermNew --wintype=floating --title=test-file-coverage --autoclose=0 nosetests % --with-cov --cov=".cov." --cov-report=term-missing --cov-config ~/.coveragerc --verbose"
 endfunction
 
 " ---------------
