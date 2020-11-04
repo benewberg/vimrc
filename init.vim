@@ -295,6 +295,7 @@ let g:which_key_map.g = {
 let g:which_key_map.j = {
   \ 'name': '+jump',
   \ 'b': ['AnyJumpBack', 'jump back'],
+  \ 'd': ['<Plug>(coc-definition)', 'definition'],
   \ 'j': ['AnyJump', 'jump'],
   \ 'l': ['AnyJumpLastResults', 'jump last'],
   \ 'p': [":call CocAction('doHover')", 'peek'],
