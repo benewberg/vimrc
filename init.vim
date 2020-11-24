@@ -64,6 +64,11 @@ let g:fzf_colors = {
   \ 'header': ['fg', 'Comment']}
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* LinesWithPreview
+  \ call fzf#vim#grep(
+  \   'rg --with-filename --column --line-number --no-heading --color=always --smart-case . '.fnameescape(expand('%')), 1,
+  \   fzf#vim#with_preview({'options': '--delimiter : --nth 4.. --no-sort'}, 'right:50%', '?'),
+  \   1)
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --hidden --smart-case --no-heading --color=always '.shellescape(<q-args>), 1,
@@ -270,7 +275,7 @@ let g:which_key_map.c = {
 "  find
 let g:which_key_map.f = {
   \ 'name': '+find',
-  \ 'l': ["Lines", 'lines'],
+  \ 'l': ["LinesWithPreview", 'lines'],
   \ 'r': ["Rg", 'rg'],
   \}
 
