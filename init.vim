@@ -16,7 +16,7 @@ Plug 'benewberg/ayu-vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'machakann/vim-sandwich'
 Plug 'justinmk/vim-sneak'
-Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/is.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'pechorin/any-jump.vim'
 
@@ -235,10 +235,6 @@ set timeoutlen=1000
 "  vim-sneak
 let g:sneak#label = 1  " for a lighter-weight easymotion feel
 
-"  incsearch
-set hlsearch
-let g:incsearch#auto_nohlsearch = 1  " auto turn off highlighting when navigating off
-
 "  floaterm
 let g:floaterm_autoclose = 1
 let g:floaterm_width = 0.9
@@ -363,12 +359,6 @@ nnoremap <C-j> <C-W><down>
 nnoremap <C-k> <C-W><up>
 nnoremap <C-l> <C-W><right>
 nnoremap <C-h> <C-W><left>
-
-"  incsearch
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
 
 " -----------------
 "  custom commands
